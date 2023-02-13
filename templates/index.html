@@ -1,0 +1,40 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block Title %}Team 2073 Scouting{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'bootstrap.min.css' %}">
+</head>
+<body>
+{% block Body %}
+    <nav class="navbar navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand font-weight-bold" href="#">Scouting App</a>
+            {#            {% if user.is_authenticated %}#}
+            {#                <div class="dropdown">#}
+            {#                    <button class="btn btn-dark">Hello {{ user.username }}</button>#}
+            {#                    <div class="dropdown-content">#}
+            {#                        <a href="{% url 'logout' %}">Logout</a>#}
+            {#                    </div>#}
+            {#                </div>#}
+            {#            {% else %}#}
+            {#                <form class="inline">#}
+            {#                    <a class="btn btn-light mr-1" type="button" href="{% url 'login' %}">Login</a>#}
+            {#                    <a class="btn btn-success" type="button" href="{% url 'signup' %}">Signup</a>#}
+            {#                </form>#}
+            {#            {% endif %}#}
+        </div>
+    </nav>
+    <div class="container">
+        <br>
+        {% block Content %}
+        {% endblock %}
+    </div>
+{% endblock %}
+</body>
+</html>
+
+<script rel="script" src="{% static 'jquery.js' %}"></script>
+<script rel="script" src="{% static 'bootstrap.bundle.min.js' %}"></script>
