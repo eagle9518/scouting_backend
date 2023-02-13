@@ -1,0 +1,22 @@
+{% extends 'index.html' %}
+
+{% block Title %} Teams {% endblock %}
+
+{% block Content %}
+    <h2>Teams</h2>
+    <table>
+        <thead>
+        <tr>
+            <th>Team Number</th>
+            <th>Image</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for team in all_teams %}
+            <tr>
+                <td><a href="{% url 'team_page' team.team_number %}">{{ team.team_number }}</a></td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

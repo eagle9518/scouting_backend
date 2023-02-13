@@ -1,0 +1,29 @@
+{% extends 'index.html' %}
+
+{% block Title %} Team {{ team.team_number }}{% endblock %}
+
+{% block Content %}
+    <h2>Team {{ team.team_number }}</h2>
+    <table>
+        <thead>
+        <tr>
+            <th>Match</th>
+            <th>Auto Charging</th>
+            <th>Auto Cones Points</th>
+            <th>Auto Cubes Points</th>
+            <th>Teleop Cones Points</th>
+            <th>Teleop Cubes Points</th>
+            <th>Cone Transport</th>
+            <th>Cube Transport</th>
+            <th>End Charging</th>
+            <th>Total Points</th>
+            <th>Driver Ranking</th>
+            <th>Defense Ranking</th>
+            <th>Comments</th>
+            <th>Name</th>
+        </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+{% endblock %}
