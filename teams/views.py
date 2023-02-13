@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 
 # Create your views here.
 from teams.models import Teams
@@ -12,5 +12,5 @@ def display_teams(request):
 
 
 def team_page(request, team_number):
-    team = Teams.objects.get(team_number=team_number)
+    team = get_object_or_404(Teams, team_number=team_number)
     return render(request, 'team_page.html', {'team': team})

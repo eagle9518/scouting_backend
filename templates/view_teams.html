@@ -4,7 +4,7 @@
 
 {% block Content %}
     <h2>Teams</h2>
-    <table>
+    <table class="table table-responsive">
         <thead>
         <tr>
             <th>Team Number</th>
@@ -14,7 +14,7 @@
         <tbody>
         {% for team in all_teams %}
             <tr>
-                <td><a href="{% url 'team_page' team.team_number %}">{{ team.team_number }}</a></td>
+                <td><h4><a href="{% url 'team_page' team.team_number %}">{{ team.team_number }}</a></h4></td>
             </tr>
         {% endfor %}
         </tbody>
