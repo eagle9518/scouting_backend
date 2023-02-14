@@ -16,9 +16,11 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from teams import views as team_views
+from scanner import views as scanner_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('scanner/', scanner_views.scanner, name='scanner'),
     path('teams/', team_views.display_teams, name='teams'),
     path('teams/<int:team_number>', team_views.team_page, name='team_page'),
 ]

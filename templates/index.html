@@ -5,7 +5,8 @@
 <head>
     <meta charset="UTF-8">
     <title>{% block Title %}Team 2073 Scouting{% endblock %}</title>
-    <link rel="stylesheet" href="{% static 'bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'imported/bootstrap.min.css' %}">
+    {% block Styles %} {% endblock %}
 </head>
 <body>
 {% block Body %}
@@ -36,5 +37,6 @@
 </body>
 </html>
 
-<script rel="script" src="{% static 'jquery.js' %}"></script>
-<script rel="script" src="{% static 'bootstrap.bundle.min.js' %}"></script>
+<script rel="script" src="{% static 'static/imported/jquery.js' %}"></script>
+<script rel="script" src="{% static 'static/imported/bootstrap.bundle.min.js' %}"></script>
+{% block Scripts %}{% endblock %}
