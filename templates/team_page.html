@@ -26,6 +26,24 @@
         </tr>
         </thead>
         <tbody>
+        {% for match in team.team_match_data.all %}
+            <td>{{ match.match_number }}</td>
+            <td>{{ match.auto_charging_station }}</td>
+            <td>{{ match.auto_upper_counts }}</td>
+            <td>{{ match.auto_middle_counts }}</td>
+            <td>{{ match.auto_lower_counts }}</td>
+            <td>{{ match.teleop_upper_counts }}</td>
+            <td>{{ match.teleop_middle_counts }}</td>
+            <td>{{ match.teleop_lower_counts }}</td>
+            <td>{{ match.cone_transport }}</td>
+            <td>{{ match.cube_transport }}</td>
+            <td>{{ match.end_charging_station }}</td>
+            <td>{{ match.total_points }}</td>
+            <td>{{ match.driver_ranking }}</td>
+            <td>{{ match.defense_ranking }}</td>
+            <td>{{ match.comment }}</td>
+            <td>{{ match.scout_name }}</td>
+        {% endfor %}
         </tbody>
     </table>
 {% endblock %}

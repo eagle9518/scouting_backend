@@ -16,11 +16,17 @@ class Team_Match_Data(models.Model):
     match_number = models.IntegerField()
     auto_charging_station = models.IntegerField()
     auto_upper = models.CharField(validators=[validate_comma_separated_integer_list], max_length=9)
+    auto_upper_counts = models.IntegerField()
     auto_middle = models.CharField(validators=[validate_comma_separated_integer_list], max_length=9)
+    auto_middle_counts = models.IntegerField()
     auto_lower = models.CharField(validators=[validate_comma_separated_integer_list], max_length=9)
+    auto_lower_counts = models.IntegerField()
     teleop_upper = models.CharField(validators=[validate_comma_separated_integer_list], max_length=9)
+    teleop_upper_counts = models.IntegerField()
     teleop_middle = models.CharField(validators=[validate_comma_separated_integer_list], max_length=9)
+    teleop_middle_counts = models.IntegerField()
     teleop_lower = models.CharField(validators=[validate_comma_separated_integer_list], max_length=9)
+    teleop_lower_counts = models.IntegerField()
     cone_transport = models.IntegerField()
     cube_transport = models.IntegerField()
     end_charging_station = models.IntegerField()
@@ -29,5 +35,3 @@ class Team_Match_Data(models.Model):
     defense_ranking = models.IntegerField()
     comment = models.CharField(max_length=128)
     scout_name = models.CharField(max_length=32)
-
-
