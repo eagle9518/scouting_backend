@@ -10,22 +10,32 @@
 </head>
 <body>
 {% block Body %}
-    <nav class="navbar navbar-dark bg-dark">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container">
-            <a class="navbar-brand font-weight-bold" href="#">Scouting App</a>
-            {#            {% if user.is_authenticated %}#}
-            {#                <div class="dropdown">#}
-            {#                    <button class="btn btn-dark">Hello {{ user.username }}</button>#}
-            {#                    <div class="dropdown-content">#}
-            {#                        <a href="{% url 'logout' %}">Logout</a>#}
-            {#                    </div>#}
-            {#                </div>#}
-            {#            {% else %}#}
-            {#                <form class="inline">#}
-            {#                    <a class="btn btn-light mr-1" type="button" href="{% url 'login' %}">Login</a>#}
-            {#                    <a class="btn btn-success" type="button" href="{% url 'signup' %}">Signup</a>#}
-            {#                </form>#}
-            {#            {% endif %}#}
+            <a class="navbar-brand" href="#">Scouting App</a>
+            <div class="collapse navbar-collapse">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="{% url 'scanner' %}">Scanner</a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link" href="{% url 'teams' %}">Teams</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Matches
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="#">Match List</a>
+                            <a class="dropdown-item" href="#">Match List Graphic</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="#">Strategist Dashboard</a>
+                        </div>
+                    </li>
+                </ul>
+                <a class="nav-item active text-white" href="#">Pit Scouting</a>
+            </div>
         </div>
     </nav>
     <div class="container">
