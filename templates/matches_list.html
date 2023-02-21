@@ -1,0 +1,45 @@
+{% extends 'index.html' %}
+
+{% block Title %} Matches List {% endblock %}
+
+{% block Content %}
+    <h2>Matches List</h2>
+    <table class="table table-responsive table-striped">
+        <thead>
+        <tr>
+            <th>Match</th>
+            <th colspan="12" style="text-align: center">Red Alliance</th>
+            <th>Red Score</th>
+            <th colspan="12" style="text-align: center">Blue Alliance</th>
+            <th>Blue Score</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for match in matches %}
+            <tr>
+                <td><a href="{% url 'match_summaries' match.quantifier match.match_number "Red_Total" %}">
+                    {{ match.quantifier }} Match {{ match.match_number }}</a></td>
+                <td colspan="4"><a href="{% url 'team_page' match.red_one %}">{{ match.red_one }}</a></td>
+                <td colspan="4"><a href="{% url 'team_page' match.red_two %}">{{ match.red_two }}</a></td>
+                <td colspan="4"><a href="{% url 'team_page' match.red_three %}">{{ match.red_three }}</a></td>
+                <td></td>
+                <td colspan="4"><a href="{% url 'team_page' match.blue_one %}">{{ match.blue_one }}</a></td>
+                <td colspan="4"><a href="{% url 'team_page' match.blue_two %}">{{ match.blue_two }}</a></td>
+                <td colspan="4"><a href="{% url 'team_page' match.blue_three %}">{{ match.blue_three }}</a></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td colspan="4">100</td>
+                <td colspan="4">12</td>
+                <td colspan="4">34</td>
+                <td style="text-align: center">232</td>
+                <td colspan="4">23</td>
+                <td colspan="4">1</td>
+                <td colspan="4">1</td>
+                <td style="text-align: center">232</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

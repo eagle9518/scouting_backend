@@ -11,42 +11,34 @@
 <body>
 {% block Body %}
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div class="container">
-            <a class="navbar-brand" href="#">Scouting App</a>
-            <div class="collapse navbar-collapse">
-                <ul class="navbar-nav mr-auto">
-                    <li class="nav-item active">
-                        <a class="nav-link" href="{% url 'scanner' %}">Scanner</a>
-                    </li>
-                    <li class="nav-item active">
-                        <a class="nav-link" href="{% url 'teams' %}">Teams</a>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Matches
-                        </a>
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="#">Match List</a>
-                            <a class="dropdown-item" href="#">Match List Graphic</a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="#">Strategist Dashboard</a>
-                        </div>
-                    </li>
-                </ul>
-                <a class="nav-item active text-white" href="#">Pit Scouting</a>
-            </div>
+        <a class="navbar-brand" href="{% url 'home' %}">Scouting App</a>
+        <div class="collapse navbar-collapse">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="{% url 'scanner' %}">Scanner</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">Pit Scouting</a>
+                </li>
+
+                <li class="nav-item active">
+                    <a class="nav-link" href="{% url 'teams' %}">Teams</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="{% url 'matches_list' %}">Matches List</a>
+                </li>
+            </ul>
         </div>
     </nav>
+    <br>
     <div class="container">
-        <br>
-        {% block Content %}
-        {% endblock %}
+    {% block Content %}
+    {% endblock %}
     </div>
 {% endblock %}
 </body>
 </html>
 
-<script rel="script" src="{% static 'static/imported/jquery.js' %}"></script>
-<script rel="script" src="{% static 'static/imported/bootstrap.bundle.min.js' %}"></script>
+<script rel="script" src="{% static 'imported/jquery.js' %}"></script>
+<script rel="script" src="{% static 'imported/bootstrap.bundle.min.js' %}"></script>
 {% block Scripts %}{% endblock %}

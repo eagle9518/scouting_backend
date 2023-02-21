@@ -1,8 +1,10 @@
 import json
 
+import numpy as np
 from django.http import JsonResponse
 from django.shortcuts import render
-from teams import models
+from teams.models import Teams, Team_Match_Data
+from matches.models import Matches
 from numpy import count_nonzero
 
 # Create your views here.
@@ -16,16 +18,16 @@ def scanner(request):
         total_points = points_calculator(data_from_post)
 
         team_number = int(data_from_post["teamNumber"])
-        if not models.Teams.objects.filter(team_number=team_number).exists():
-            team_object = models.Teams.objects.create(team_number=team_number)
+        if not Teams.objects.filter(team_number=team_number).exists():
+            team_object = Teams.objects.create(team_number=team_number)
         else:
-            team_object = models.Teams.objects.get(team_number=team_number)
+            team_object = Teams.objects.get(team_number=team_number)
 
         auto_grid_list = json.loads(data_from_post["autoGrid"])
         teleop_grid_list = json.loads(data_from_post["teleGrid"])
 
-        if not models.Team_Match_Data.objects.filter(team=team_object, match_number=data_from_post["matchNumber"]).exists():
-            models.Team_Match_Data.objects.create(
+        if not Team_Match_Data.objects.filter(team=team_object, match_number=data_from_post["matchNumber"]).exists():
+            Team_Match_Data.objects.create(
                 team=team_object,
                 match_number=data_from_post["matchNumber"],
                 auto_charging_station=data_from_post["autoChargingStation"],
