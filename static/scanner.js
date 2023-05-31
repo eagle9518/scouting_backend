@@ -4,32 +4,37 @@ const video = document.getElementById('qr-video');
 const camQrResult = document.getElementById('cam-qr-result');
 let prevResult = "";
 
-//Basic fetch protocol
+let button_press =document.getElementById("Something");
+button_press.addEventListener("click", post_data_to_server);
+const data = {"compCode":"0","name":"Nathan","teamNumber":"359","matchNumber":"2","autoChargingStation":"1","autoGrid":"[[0, 0, 1, 1, 2, 0, 0, 0, 0], [0, 0, 0, 1, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0]]","teleGrid":"[[0, 0, 0, 0, 2, 0, 0, 0, 0], [0, 0, 0, 0, 2, 1, 1, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0]]","coneTransport":"0","cubeTransport":"3","endChargingStation":"1","driverRanking":"2","defenseRanking":"1","comment":"idk."};
+
 function getCookie(name) {
-    if (!document.cookie) {
-        return null;
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
     }
-
-    const xsrfCookies = document.cookie.split(';')
-        .map(c => c.trim())
-        .filter(c => c.startsWith(name + '='));
-
-    if (xsrfCookies.length === 0) {
-        return null;
-    }
-    return decodeURIComponent(xsrfCookies[0].split('=')[1]);
+    return cookieValue;
 }
 
-function post_data_to_server(data) {
+function post_data_to_server() {
     fetch("", {
         method: 'POST',
-        credentials: 'same-origin',
+        credentials: 'include',
+        mode: 'same-origin',
         headers: {
             'Accept': 'application/json',
             'X-Requested-With': 'XMLHttpRequest',
             'X-CSRFToken': getCookie('csrftoken'),
         },
-        body: data
+        body: JSON.stringify(data)
     })
         .then(response => {
             return response.json();

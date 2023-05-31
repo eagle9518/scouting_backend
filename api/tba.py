@@ -1,9 +1,9 @@
 import requests
 
 team_key = "frc2073"
-year = 2022
+year = 2023
 X_TBA_Auth_Key = "opXlAfkuD4tQbDm2iskpBHdyYQbarWsQoeSG8w6MSKQ0c8jtbOnbREQu7z7nfUCK"
-event_key = "2022azva"
+event_key = "2023azva"
 
 
 def get_team_events():
