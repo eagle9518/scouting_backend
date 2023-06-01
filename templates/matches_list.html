@@ -17,7 +17,7 @@
         <tbody>
         {% for match in matches %}
             <tr>
-                <td><a href="{% url 'match_summaries' match.quantifier match.match_number "Red_Total" %}">
+                <td><a href="{% url 'match_summaries' match.quantifier match.match_number match.red_one %}">
                     {{ match.quantifier }} Match {{ match.match_number }}</a></td>
                 <td colspan="4"><a href="{% url 'team_page' match.red_one %}">{{ match.red_one }}</a></td>
                 <td colspan="4"><a href="{% url 'team_page' match.red_two %}">{{ match.red_two }}</a></td>

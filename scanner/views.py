@@ -21,22 +21,25 @@ def scanner(request):
         # Either retrieves Team object or creates a new one
         team_object, created = Teams.objects.get_or_create(team_number=team_number)
 
+        # Function to convert numpy array to string
+        def numpy_to_string(numpy_array): return ",".join(str(x) for x in numpy_array)
+
         # Creates a new Team_Match_Data with given data if it doesn't exist
         Team_Match_Data.objects.get_or_create(
             team=team_object,
             match_number=data_from_post["matchNumber"],
             auto_charging_station=data_from_post["autoChargingStation"],
-            auto_upper=auto_grid_list[0],
+            auto_upper=numpy_to_string(auto_grid_list[0]),
             auto_upper_counts=np.count_nonzero(auto_grid_list[0]),
-            auto_middle=auto_grid_list[1],
+            auto_middle=numpy_to_string(auto_grid_list[1]),
             auto_middle_counts=np.count_nonzero(auto_grid_list[1]),
-            auto_lower=auto_grid_list[2],
+            auto_lower=numpy_to_string(auto_grid_list[2]),
             auto_lower_counts=np.count_nonzero(auto_grid_list[2]),
-            teleop_upper=teleop_grid_list[0],
+            teleop_upper=numpy_to_string(teleop_grid_list[0]),
             teleop_upper_counts=np.count_nonzero(teleop_grid_list[0]),
-            teleop_middle=teleop_grid_list[1],
+            teleop_middle=numpy_to_string(teleop_grid_list[1]),
             teleop_middle_counts=np.count_nonzero(teleop_grid_list[1]),
-            teleop_lower=teleop_grid_list[2],
+            teleop_lower=numpy_to_string(teleop_grid_list[2]),
             teleop_lower_counts=np.count_nonzero(teleop_grid_list[2]),
             cone_transport=data_from_post["coneTransport"],
             cube_transport=data_from_post["cubeTransport"],

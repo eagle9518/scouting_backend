@@ -1,92 +1,50 @@
-const relative_url = "/static/images/"
-const grid_layout = [
-    [{0: "grid_one_top_left_cone.png", 1: "grid_one_top_left_cone1.png"}, {0: "grid_one_top_cube.png", 2: "grid_one_top_cube2.png"}, {0: "grid_one_top_right_cone.png", 1: "grid_one_top_right_cone1.png"},
-     {0: "grid_two_top_left_cone.png", 1: "grid_two_top_left_cone1.png"}, {0: "grid_two_top_cube.png", 2: "grid_two_top_cube2.png"}, {0: "grid_two_top_right_cone.png", 1: "grid_two_top_right_cone1.png"},
-     {0: "grid_three_top_left_cone.png", 1: "grid_three_top_left_cone1.png"}, {0: "grid_three_top_cube.png", 2: "grid_three_top_cube2.png"}, {0: "grid_three_top_right_cone.png", 1: "grid_three_top_right_cone1.png"}],
-    [{0: "grid_one_middle_left_cone.png", 1: "grid_one_middle_left_cone1.png"}, {0: "grid_one_middle_cube.png", 2: "grid_one_middle_cube2.png"}, {0: "grid_one_middle_right_cone.png", 1: "grid_one_middle_right_cone1.png"},
-     {0: "grid_two_middle_left_cone.png", 1: "grid_two_middle_left_cone1.png"}, {0: "grid_two_middle_cube.png", 2: "grid_two_middle_cube2.png"}, {0: "grid_two_middle_right_cone.png", 1: "grid_two_middle_right_cone1.png"},
-     {0: "grid_three_middle_left_cone.png", 1: "grid_three_middle_left_cone1.png"}, {0: "grid_three_middle_cube.png", 2: "grid_three_middle_cube2.png"}, {0: "grid_three_middle_right_cone.png", 1: "grid_three_middle_right_cone1.png"}],
-    [{0: "grid_one_bottom_left_hybrid.png", 1: "grid_one_bottom_left_hybrid1.png", 2: "grid_one_bottom_left_hybrid2.png"}, {0: "grid_one_bottom_middle_hybrid.png", 1: "grid_one_bottom_middle_hybrid1.png", 2: "grid_one_bottom_middle_hybrid2.png"}, {0: "grid_one_bottom_right_hybrid.png", 1: "grid_one_bottom_right_hybrid1.png", 2: "grid_one_bottom_right_hybrid2.png"},
-     {0: "grid_two_bottom_left_hybrid.png", 1: "grid_two_bottom_left_hybrid1.png", 2: "grid_two_bottom_left_hybrid2.png"}, {0: "grid_two_bottom_middle_hybrid.png", 1: "grid_two_bottom_middle_hybrid1.png", 2: "grid_two_bottom_middle_hybrid2.png"}, {0: "grid_two_bottom_right_hybrid.png", 1: "grid_two_bottom_right_hybrid1.png", 2: "grid_two_bottom_right_hybrid2.png"},
-     {0: "grid_three_bottom_left_hybrid.png", 1: "grid_three_bottom_left_hybrid1.png", 2: "grid_three_bottom_left_hybrid2.png"}, {0: "grid_three_bottom_middle_hybrid.png", 1: "grid_three_bottom_middle_hybrid1.png", 2: "grid_three_bottom_middle_hybrid2.png"}, {0: "grid_three_bottom_right_hybrid.png", 1: "grid_three_bottom_right_hybrid1.png", 2: "grid_three_bottom_right_hybrid2.png"}]
-];
+const svgns = "http://www.w3.org/2000/svg";
 
-function getCookie(name) {
-    if (!document.cookie) {
-        return null;
+const teamNumber = parseInt(document.currentScript.dataset.teamNumber)
+const allTeamsInMatch = JSON.parse(document.currentScript.nextElementSibling.textContent);
+const scoringGrid = JSON.parse(document.currentScript.nextElementSibling.nextElementSibling.textContent);
+console.log(scoringGrid);
+const scoringImage = document.getElementById("scoring-image");
+
+for (let row = 0; row < 3; row++) {
+    const tableData = document.createElement("td");
+    if (allTeamsInMatch.slice(0, 3).includes(teamNumber)) {
+        tableData.setAttribute("class", "red");
+    } else {
+        tableData.setAttribute("class", "blue");
     }
 
-    const xsrfCookies = document.cookie.split(';')
-        .map(c => c.trim())
-        .filter(c => c.startsWith(name + '='));
+    const svg = document.createElementNS(svgns, "svg");
+    svg.setAttribute("width", "24");
+    svg.setAttribute("height", "216");
+    svg.setAttribute("style", "display: block; margin: auto");
 
-    if (xsrfCookies.length === 0) {
-        return null;
-    }
-    return decodeURIComponent(xsrfCookies[0].split('=')[1]);
-}
+    let verticalOffset = 0;
+    for (let col = 0; col < 9; col++) {
+        let g = document.createElementNS(svgns, "g");
+        g.setAttribute("transform", "translate(0, " + verticalOffset + ")");
+        verticalOffset += 24;
 
-function get_match_data_from_server() {
-    return new Promise((resolve => {
-        fetch("", {
-            method: 'POST',
-            credentials: 'same-origin',
-            headers: {
-                'Accept': 'application/json',
-                'X-Requested-With': 'XMLHttpRequest',
-                'X-CSRFToken': getCookie('csrftoken'),
-            },
-            body: {"Match Data Wanted": 2073}
-        })
-            .then(response => {
-                return response.json();
-            })
-            .then(data => {
-                resolve(data["match_data"]);
-            })
-    }));
-
-}
-
-
-async function draw_grid(context, match_data) {
-    let initial_x = 27;
-    let y = new Array(9).fill(0);
-
-    for (let row = 0; row < grid_layout.length; row++) {
-        let x = (row !== 2) ? initial_x : 0;
-        for (let element = 0; element < grid_layout[row].length; element++) {
-            await new Promise((resolve) => {
-                setTimeout(() => {
-                    let grid_image = new Image();
-                    grid_image.onload = () => {
-                        context.drawImage(grid_image, x, y[element]);
-                        x += grid_image.width;
-                        y[element] += grid_image.height;
-                    }
-                    if (match_data[row][element] > 2 || match_data[row][element] === undefined) {
-                        match_data[row][element] = 0;
-                    }
-                    grid_image.src = relative_url + grid_layout[row][element][match_data[row][element]];
-                    resolve();
-                }, 5);
-            });
+        let rec = document.createElementNS(svgns, "rect");
+        rec.setAttribute("x", "1");
+        rec.setAttribute("y", "1");
+        rec.setAttribute("width", "22");
+        rec.setAttribute("height", "22");
+        rec.setAttribute("rx", "4");
+        console.log(scoringGrid[row + 3][col]);
+        if (scoringGrid[row + 3][col] !== "0") {
+            rec.setAttribute("style", "fill:rgb(0,255,0,0.3); stroke:rgb(0,0,0,0.2)");
+        } else {
+            rec.setAttribute("style", "fill:rgb(0,0,0,0); stroke:rgb(0,0,0,0.2)");
         }
+        g.appendChild(rec);
+
+        svg.appendChild(g);
+
     }
+
+    tableData.appendChild(svg);
+    scoringImage.appendChild(tableData);
 }
-
-async function main() {
-    const auto_canvas = document.getElementById('auto_grid');
-    const auto_context = auto_canvas.getContext('2d');
-    const teleop_canvas = document.getElementById('teleop_grid');
-    const teleop_context = teleop_canvas.getContext('2d');
-
-    let match_data = await get_match_data_from_server();
-
-    draw_grid(auto_context, match_data).then();
-    draw_grid(teleop_context, match_data).then();
-}
-
-main().then();
 
 

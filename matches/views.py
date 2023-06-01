@@ -32,37 +32,13 @@ def matches_list(request):
     return render(request, 'matches_list.html', {'matches': all_matches})
 
 
-def match_summaries(request, quantifier, match_number, match_data_wanted):
+def match_summaries(request, quantifier, match_number, team_number):
     match = Matches.objects.get(quantifier=quantifier, match_number=match_number)
+    all_teams_in_match = [match.red_one, match.red_two, match.red_three, match.blue_one, match.blue_two, match.blue_three]
 
-    if request.headers.get('x-requested-with') == 'XMLHttpRequest':
-        if Team_Match_Data.objects.filter(match_number=match_number).exists():
-            if match_data_wanted == "Red_Total":
-                red_one_match_data = Team_Match_Data.objects.get(team=Teams.objects.get(team_number=match.red_one),
-                                                                 match_number=match_number)
-                red_two_match_data = Team_Match_Data.objects.get(team=Teams.objects.get(team_number=match.red_two),
-                                                                 match_number=match_number)
-                red_three_match_data = Team_Match_Data.objects.get(team=Teams.objects.get(team_number=match.red_three),
-                                                                   match_number=match_number)
-                team_match_data = np.add(
-                    [red_one_match_data.auto_upper, red_one_match_data.auto_middle, red_one_match_data.auto_lower],
-                    np.add(red_two_match_data, red_three_match_data))
-            elif match_data_wanted == "Blue_Total":
-                blue_one_match_data = Team_Match_Data.objects.get(team=Teams.objects.get(team_number=match.blue_one),
-                                                                  match_number=match_number)
-                blue_two_match_data = Team_Match_Data.objects.get(team=Teams.objects.get(team_number=match.blue_two),
-                                                                  match_number=match_number)
-                blue_three_match_data = Team_Match_Data.objects.get(
-                    team=Teams.objects.get(team_number=match.blue_three), match_number=match_number)
-                team_match_data = np.add(blue_one_match_data, blue_two_match_data, blue_three_match_data).tolist()
-            else:
-                team_match_data = Team_Match_Data.objects.get(team=Teams.objects.get(team_number=match_data_wanted),
-                                                              match_number=match_number)
-            response = {
-                "match_data": [team_match_data.auto_upper, team_match_data.auto_middle, team_match_data.auto_lower]}
-        else:
-            response = {"match_data": [[0] * 9, [0] * 9, [0] * 9]}
-
-        return JsonResponse(response)
-
-    return render(request, 'match_summaries.html', {"match": match, "match_data_wanted": match_data_wanted})
+    # team_data = Team_Match_Data.objects.get(team=Teams.objects.get_or_create(team_number=match_data_wanted), match_number=match_number)
+    team, created = Teams.objects.get_or_create(team_number=359)
+    team_match_data = Team_Match_Data.objects.get(team=team, match_number=2)
+    scoring_grid = [team_match_data.auto_upper, team_match_data.auto_middle, team_match_data.auto_lower,
+                    team_match_data.teleop_upper, team_match_data.teleop_middle, team_match_data.teleop_lower]
+    return render(request, 'match_summaries.html', {"match": match, "all_teams_in_match": all_teams_in_match, "team_number": team_number, "scoring_grid": scoring_grid})

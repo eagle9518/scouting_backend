@@ -1,0 +1,100 @@
+table.match-table {
+    border: 1px solid #ddd;
+    margin-bottom: 20px;
+    max-width: 100%;
+    width: 100%
+}
+
+table.match-table>tbody>tr>td,table.match-table>tbody>tr>th,table.match-table>tfoot>tr>td,table.match-table>tfoot>tr>th,table.match-table>thead>tr>td,table.match-table>thead>tr>th {
+    border-top: 1px solid #ddd;
+    line-height: 1.42857143;
+    padding: 8px;
+    vertical-align: top
+}
+
+table.match-table>thead>tr>th {
+    border-bottom: 2px solid #ddd;
+    vertical-align: bottom
+}
+
+table.match-table>caption+thead>tr:first-child>td,table.match-table>caption+thead>tr:first-child>th,table.match-table>colgroup+thead>tr:first-child>td,table.match-table>colgroup+thead>tr:first-child>th,table.match-table>thead:first-child>tr:first-child>td,table.match-table>thead:first-child>tr:first-child>th {
+    border-top:0
+}
+
+table.match-table>tbody+tbody {
+    border-top: 2px solid #ddd
+}
+
+table.match-table .table {
+    background-color: #fff
+}
+
+table.match-table>tbody>tr>td,table.match-table>tbody>tr>th,table.match-table>tfoot>tr>td,table.match-table>tfoot>tr>th,table.match-table>thead>tr>td,table.match-table>thead>tr>th {
+    border: 1px solid #ddd;
+    padding: 5px
+}
+
+table.match-table>thead>tr>td,table.match-table>thead>tr>th {
+    border-bottom-width: 2px
+}
+
+table.match-table,table.oprTable {
+    background-color: #fff;
+    margin: 0 0 1em auto;
+    padding: 3px 0;
+    width: 100%
+}
+
+table.match-table tr,table.oprTable tr {
+    padding: 3px 0
+}
+
+table.match-table tr.key,table.oprTable tr.key {
+    background-color: #f0f0f0
+}
+
+table.match-table th,table.oprTable th {
+    font-weight: 700
+}
+
+table.match-table td,table.match-table th,table.oprTable td,table.oprTable th {
+    padding: 3px;
+    text-align: center;
+    vertical-align: middle!important
+}
+
+table.match-table td.red {
+    background-color: #fee
+}
+
+table.match-table td.blue {
+    background-color: #eef
+}
+
+table.match-table td.red-favorite {
+    border: 2px solid red
+}
+
+table.match-table td.blue-favorite {
+    border: 2px solid #00f
+}
+
+table.match-table td.redScore {
+    background-color: #fdd
+}
+
+table.match-table td.blueScore {
+    background-color: #ddf
+}
+
+table.match-table .winner {
+    font-weight: 700
+}
+
+.red-selection {
+    background-color: #fdd;
+}
+
+.blue-selection {
+    background-color: #ddf;
+}

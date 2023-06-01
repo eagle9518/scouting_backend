@@ -3,32 +3,59 @@
 
 {% block Title %} Match Summary {% endblock %}
 
+{% block Styles %}
+    <link rel="stylesheet" href="{% static 'graphic_grid.css' %}">
+{% endblock %}
+
 {% block Content %}
     <h2 class="d-inline-block">{{ match.quantifier }} Match {{ match.match_number }} Summary</h2>
+    <br>
     <div class="dropdown d-inline-block">
-        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
-                aria-haspopup="true" aria-expanded="false">
-                {{ match_data_wanted }}
+        <button class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown">
+            {{ team_number }}
         </button>
         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-            <a class="dropdown-item" href="{% url 'match_summaries' match.quantifier match.match_number "Red_Total" %}">Red_Total</a>
-            <a class="dropdown-item" href="{% url 'match_summaries' match.quantifier match.match_number "Blue_Total" %}">Blue_Total</a>
-            <a class="dropdown-item" href="{% url 'match_summaries' match.quantifier match.match_number match.red_one %}">Red One: {{ match.red_one }}</a>
-            <a class="dropdown-item" href="{% url 'match_summaries' match.quantifier match.match_number match.red_two %}">Red Two: {{ match.red_two }}</a>
-            <a class="dropdown-item" href="{% url 'match_summaries' match.quantifier match.match_number match.red_three %}">Red Three: {{ match.red_three }}</a>
-            <a class="dropdown-item" href="{% url 'match_summaries' match.quantifier match.match_number match.blue_one %}">Blue One: {{ match.blue_one }}</a>
-            <a class="dropdown-item" href="{% url 'match_summaries' match.quantifier match.match_number match.blue_two %}">Blue Two: {{ match.blue_two }}</a>
-            <a class="dropdown-item" href="{% url 'match_summaries' match.quantifier match.match_number match.blue_three %}">Blue Three: {{ match.blue_three }}</a>
+            <a class="dropdown-item red-selection" id="redOne" href="{% url 'match_summaries' match.quantifier match.match_number match.red_one %}">Red One: {{ match.red_one }}</a>
+            <a class="dropdown-item red-selection" id="redTwo" href="{% url 'match_summaries' match.quantifier match.match_number match.red_two %}">Red Two: {{ match.red_two }}</a>
+            <a class="dropdown-item red-selection" id="redThree" href="{% url 'match_summaries' match.quantifier match.match_number match.red_three %}">Red Three: {{ match.red_three }}</a>
+            <a class="dropdown-item blue-selection" id="blueOne" href="{% url 'match_summaries' match.quantifier match.match_number match.blue_one %}">Blue One: {{ match.blue_one }}</a>
+            <a class="dropdown-item blue-selection" id="blueTwo" href="{% url 'match_summaries' match.quantifier match.match_number match.blue_two %}">Blue Two: {{ match.blue_two }}</a>
+            <a class="dropdown-item blue-selection" id="blueThree" href="{% url 'match_summaries' match.quantifier match.match_number match.blue_three %}">Blue Three: {{ match.blue_three }}</a>
         </div>
     </div>
-    <hr style="height:20px; visibility:hidden;" />
-    <canvas id="auto_grid" width="1100" height="275"></canvas>
-    <h3>Auto Grid</h3>
-    <br>
-    <canvas id="teleop_grid" width="1100" height="275"></canvas>
-    <h3>Teleop Grid</h3>
+    <table class="match-table">
+        <tbody>
+        <tr class="key">
+            <td>Top</td>
+            <td>Mid</td>
+            <td>Bot</td>
+        </tr>
+        <tr id="scoring-image">
+{#        {% if team_number == match.red_one or team_number == match.red_two or team_number == match.red_three %}#}
+{#            <td class="red">#}
+{#                <svg viewBox="">#}
+{#                    {% for g in team_match_data %}#}
+{#                        <g>#}
+{#                        <rect x="1" y="1" width="22" height="22" rx="4" style="fill:rgb(0,0,0,0); stroke:rgb(0,0,0,0.2)"></rect>#}
+{#                        </g>#}
+{#                    {% endfor %}#}
+{#                </svg>#}
+{#            </td>#}
+{#            <td class="red"></td>#}
+{#            <td class="red"></td>#}
+{#        {% else %}#}
+{#            <td class="blue">Top</td>#}
+{#            <td class="blue">Mid</td>#}
+{#            <td class="blue">Bot</td>#}
+{#        {% endif %}#}
+        </tr>
+        </tbody>
+    </table>
+
 {% endblock %}
 
 {% block Scripts %}
-    <script rel="script" src="{% static 'graphic_grid_manager.js' %}"></script>
+    <script rel="script" src="{% static 'graphic_grid_manager.js' %}" defer data-team-number="{{ team_number }}"></script>
+    {{ all_teams_in_match | json_script }}
+    {{ scoring_grid | json_script }}
 {% endblock %}
