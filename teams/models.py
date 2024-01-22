@@ -1,36 +1,35 @@
 from django.core.validators import validate_comma_separated_integer_list
 from django.db import models
 from django.db.models import Model
+from matches.models import Matches 
 
 
 class Teams(models.Model):
     team_number = models.IntegerField(unique=True)
-    # robot_picture = models.ImageField()
-    # drivetrain = models.CharField(max_length=32)
-    # primary_role = models.CharField(max_length=32)
-    # additional_info = models.CharField(max_length=128)
+    robot_picture = models.ImageField()
+    drivetrain = models.CharField(max_length=32)
+    primary_role = models.CharField(max_length=32)
+    additional_info = models.CharField(max_length=128)
 
 
+# TODO Somehow connect quantifier and match_number to Matches via Foreign Key...
 class Team_Match_Data(models.Model):
     team = models.ForeignKey(Teams, related_name='team_match_data', on_delete=models.CASCADE)
     match_number = models.IntegerField()
-    auto_charging_station = models.IntegerField()
-    auto_upper = models.CharField(validators=[validate_comma_separated_integer_list], max_length=9)
-    auto_upper_counts = models.IntegerField()
-    auto_middle = models.CharField(validators=[validate_comma_separated_integer_list], max_length=9)
-    auto_middle_counts = models.IntegerField()
-    auto_lower = models.CharField(validators=[validate_comma_separated_integer_list], max_length=9)
-    auto_lower_counts = models.IntegerField()
-    teleop_upper = models.CharField(validators=[validate_comma_separated_integer_list], max_length=9)
-    teleop_upper_counts = models.IntegerField()
-    teleop_middle = models.CharField(validators=[validate_comma_separated_integer_list], max_length=9)
-    teleop_middle_counts = models.IntegerField()
-    teleop_lower = models.CharField(validators=[validate_comma_separated_integer_list], max_length=9)
-    teleop_lower_counts = models.IntegerField()
-    cone_transport = models.IntegerField()
-    cube_transport = models.IntegerField()
-    end_charging_station = models.IntegerField()
-    total_points = models.IntegerField()
+    quantifier = models.CharField(max_length=10)
+
+    auto_leave = models.IntegerField()
+    auto_amp = models.IntegerField()
+    auto_speaker_make = models.IntegerField()
+    auto_speaker_miss = models.IntegerField()
+
+    teleop_amp = models.IntegerField()
+    teleop_speaker_make = models.IntegerField()
+    teleop_speaker_miss = models.IntegerField()
+
+    trap = models.IntegerField()
+    climb = models.IntegerField()
+
     driver_ranking = models.IntegerField()
     defense_ranking = models.IntegerField()
     comment = models.CharField(max_length=128)

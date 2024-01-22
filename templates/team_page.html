@@ -8,17 +8,13 @@
         <thead>
         <tr>
             <th>Match</th>
-            <th>Auto Charging</th>
-            <th>Auto Upper</th>
-            <th>Auto Middle</th>
-            <th>Auto Lower</th>
-            <th>Teleop Upper</th>
-            <th>Teleop Middle</th>
-            <th>Teleop Lower</th>
-            <th>Cone Transport</th>
-            <th>Cube Transport</th>
-            <th>End Charging</th>
-            <th>Total Points</th>
+            <th>A-Leave</th>
+            <th>A-Amp</th>
+            <th>A-Speaker</th>
+            <th>T-Amp</th>
+            <th>T-Speaker</th>
+            <th>Trap</th>
+            <th>Climb</th>
             <th>Driver Ranking</th>
             <th>Defense Ranking</th>
             <th>Comments</th>
@@ -26,23 +22,21 @@
         </tr>
         </thead>
         <tbody>
-        {% for match in team.team_match_data.all %}
-            <td>{{ match.match_number }}</td>
-            <td>{{ match.auto_charging_station }}</td>
-            <td>{{ match.auto_upper_counts }}</td>
-            <td>{{ match.auto_middle_counts }}</td>
-            <td>{{ match.auto_lower_counts }}</td>
-            <td>{{ match.teleop_upper_counts }}</td>
-            <td>{{ match.teleop_middle_counts }}</td>
-            <td>{{ match.teleop_lower_counts }}</td>
-            <td>{{ match.cone_transport }}</td>
-            <td>{{ match.cube_transport }}</td>
-            <td>{{ match.end_charging_station }}</td>
-            <td>{{ match.total_points }}</td>
-            <td>{{ match.driver_ranking }}</td>
-            <td>{{ match.defense_ranking }}</td>
-            <td>{{ match.comment }}</td>
-            <td>{{ match.scout_name }}</td>
+        {% for match in all_team_match_data %}
+            <tr>
+                <td><a href="{% url 'match_summaries' match.quantifier match.match_number team.team_number %}"><div style="white-space: nowrap; overflow: hidden;">{{ match.quantifier }} {{ match.match_number }}</div></a></td>
+                <td>{{ match.auto_leave }}</td>
+                <td>{{ match.auto_amp }}</td>
+                <td>{{ match.auto_speaker_make}}</td>
+                <td>{{ match.teleop_amp }}</td>
+                <td>{{ match.teleop_speaker_make }}</td>
+                <td>{{ match.trap }}</td>
+                <td>{{ match.climb }}</td>
+                <td>{{ match.driver_ranking }}</td>
+                <td>{{ match.defense_ranking }}</td>
+                <td>{{ match.comment }}</td>
+                <td>{{ match.scout_name }}</td>
+            </tr>
         {% endfor %}
         </tbody>
     </table>

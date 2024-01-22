@@ -27,5 +27,5 @@ urlpatterns = [
     path('matches/matches_list', matches_views.matches_list, name='matches_list'),
     path('matches/<slug:quantifier>/<int:match_number>/<int:team_number>', matches_views.match_summaries, name='match_summaries'),
     path('scanner/', scanner_views.scanner, name='scanner'),
-
+    path('pit_scouting/', team_views.pit_scouting, name='pit_scouting'),
 ]

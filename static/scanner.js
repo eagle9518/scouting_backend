@@ -4,9 +4,6 @@ const video = document.getElementById('qr-video');
 const camQrResult = document.getElementById('cam-qr-result');
 let prevResult = "";
 
-let button_press =document.getElementById("Something");
-button_press.addEventListener("click", post_data_to_server);
-const data = {"compCode":"0","name":"Nathan","teamNumber":"359","matchNumber":"2","autoChargingStation":"1","autoGrid":"[[0, 0, 1, 1, 2, 0, 0, 0, 0], [0, 0, 0, 1, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0]]","teleGrid":"[[0, 0, 0, 0, 2, 0, 0, 0, 0], [0, 0, 0, 0, 2, 1, 1, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0]]","coneTransport":"0","cubeTransport":"3","endChargingStation":"1","driverRanking":"2","defenseRanking":"1","comment":"idk."};
 
 function getCookie(name) {
     let cookieValue = null;
@@ -24,7 +21,7 @@ function getCookie(name) {
     return cookieValue;
 }
 
-function post_data_to_server() {
+function post_data_to_server(data) {
     fetch("", {
         method: 'POST',
         credentials: 'include',
@@ -34,7 +31,7 @@ function post_data_to_server() {
             'X-Requested-With': 'XMLHttpRequest',
             'X-CSRFToken': getCookie('csrftoken'),
         },
-        body: JSON.stringify(data)
+        body: (data)
     })
         .then(response => {
             return response.json();

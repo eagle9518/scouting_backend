@@ -1,0 +1,14 @@
+{% extends 'index.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block Title %} Pit Scouting {% endblock %}
+
+{% block Content %} 
+<h2>Pit Scouting</h2>
+<form method="POST">
+    {% csrf_token %}
+    {% crispy form.helper %}
+    <input type="submit" value="Submit">
+</form>
+{% endblock %}

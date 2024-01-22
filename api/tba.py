@@ -1,15 +1,20 @@
 import requests
 
 team_key = "frc2073"
-year = 2023
+year = 2024
 X_TBA_Auth_Key = "opXlAfkuD4tQbDm2iskpBHdyYQbarWsQoeSG8w6MSKQ0c8jtbOnbREQu7z7nfUCK"
-event_key = "2023azva"
+event_key = "2023azgl"
 
 
 def get_team_events():
     team_events = requests.get(f"https://www.thebluealliance.com/api/v3/team/{team_key}/events/{year}/keys",
                                headers={"X-TBA-Auth-Key": X_TBA_Auth_Key}).json()
-    return team_events
+    events = {}
+    for event in team_events.json():
+        events[event["key"]] = event["short_name"]
+    events["testing"] = "Training"
+
+    return events
 
 
 def get_match_schedule():

@@ -23,6 +23,43 @@
             <a class="dropdown-item blue-selection" id="blueThree" href="{% url 'match_summaries' match.quantifier match.match_number match.blue_three %}">Blue Three: {{ match.blue_three }}</a>
         </div>
     </div>
+    <h2>Team {{ team_number }}</h2>
+    <h6>Key: Cone | Cube</h6>
+    <table class="table table-responsive">
+        <thead>
+        <tr>
+            <th>Auto Charging</th>
+            <th>Auto Upper</th>
+            <th>Auto Middle</th>
+            <th>Auto Lower</th>
+            <th>Teleop Upper</th>
+            <th>Teleop Middle</th>
+            <th>Teleop Lower</th>
+            <th>End Charging</th>
+            <th>Total Points</th>
+            <th>Driver Ranking</th>
+            <th>Defense Ranking</th>
+            <th>Comments</th>
+            <th>Name</th>
+        </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>{{ team_match_data.auto_charging_station }}</td>
+                <td>{{ team_match_data.auto_upper_cone_counts }} | {{ team_match_data.auto_upper_cube_counts }}</td>
+                <td>{{ team_match_data.auto_middle_cone_counts }} | {{ team_match_data.auto_middle_cube_counts }}</td>
+                <td>{{ team_match_data.auto_lower_cone_counts }} | {{ team_match_data.auto_lower_cube_counts }}</td>
+                <td>{{ team_match_data.teleop_upper_cone_counts }} | {{ team_match_data.teleop_upper_cube_counts }}</td>
+                <td>{{ team_match_data.teleop_middle_cone_counts }} | {{ team_match_data.teleop_middle_cube_counts }}</td>
+                <td>{{ team_match_data.teleop_lower_cone_counts }} | {{ team_match_data.teleop_lower_cube_counts }}</td>
+                <td>{{ team_match_data.end_charging_station }}</td>
+                <td>{{ team_match_data.total_points }}</td>
+                <td>{{ team_match_data.driver_ranking }}</td>
+                <td>{{ team_match_data.defense_ranking }}</td>
+                <td>{{ team_match_data.comment }}</td>
+                <td>{{ team_match_data.scout_name }}</td>
+            </tr>
+        </tbody>
     <table class="match-table">
         <tbody>
         <tr class="key">
@@ -31,23 +68,6 @@
             <td>Bot</td>
         </tr>
         <tr id="scoring-image">
-{#        {% if team_number == match.red_one or team_number == match.red_two or team_number == match.red_three %}#}
-{#            <td class="red">#}
-{#                <svg viewBox="">#}
-{#                    {% for g in team_match_data %}#}
-{#                        <g>#}
-{#                        <rect x="1" y="1" width="22" height="22" rx="4" style="fill:rgb(0,0,0,0); stroke:rgb(0,0,0,0.2)"></rect>#}
-{#                        </g>#}
-{#                    {% endfor %}#}
-{#                </svg>#}
-{#            </td>#}
-{#            <td class="red"></td>#}
-{#            <td class="red"></td>#}
-{#        {% else %}#}
-{#            <td class="blue">Top</td>#}
-{#            <td class="blue">Mid</td>#}
-{#            <td class="blue">Bot</td>#}
-{#        {% endif %}#}
         </tr>
         </tbody>
     </table>
