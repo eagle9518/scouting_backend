@@ -6,10 +6,13 @@ from matches.models import Matches
 
 class Teams(models.Model):
     team_number = models.IntegerField(unique=True)
-    robot_picture = models.ImageField()
+    robot_picture = models.ImageField(blank=True, null=True)
     drivetrain = models.CharField(max_length=32)
-    primary_role = models.CharField(max_length=32)
-    additional_info = models.CharField(max_length=128)
+    weight = models.IntegerField(blank=True, null=True)
+    length = models.IntegerField(blank=True, null=True)
+    width = models.IntegerField(blank=True, null=True)
+    additional_info = models.IntegerField(blank=True, null=True)
+    pit_scout_status = models.BooleanField()
 
 
 # TODO Somehow connect quantifier and match_number to Matches via Foreign Key...

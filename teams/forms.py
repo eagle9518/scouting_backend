@@ -1,28 +1,34 @@
-from crispy_forms.layout import Submit
+from crispy_forms.layout import Submit, Layout, Row
 from django import forms
 from crispy_forms.helper import FormHelper
 
-DEMO_CHOICES =(
-    ("1", "Swerve"),
-    ("2", "Westcoast"),
-    ("3", "Hybrid"),
-    ("4", "Hightide"),
+# ChoiceField must be tuple - (Data, Display)
+DRIVETRAINS = (
+    ("Swerve", "Swerve"),
+    ("WestCoast", "WestCoast"),
+    ("Logan", "Logan"),
+    ("Wong", "Wong"),
 )
 
 
 class NewPitScoutingData(forms.Form):
-    drivetrain = forms.ChoiceField(choices=DEMO_CHOICES)
-    weight = forms.CharField(max_length=32)
-    width = forms.CharField(max_length=32)
-    length = forms.CharField(max_length=32)
-    comments = forms.CharField(max_length=512)
+    drivetrain = forms.ChoiceField(choices=DRIVETRAINS)
+    weight = forms.IntegerField()
+    length = forms.IntegerField()
+    width = forms.IntegerField()
+    robot_picture = forms.ImageField()
+    additional_info = forms.CharField(max_length=512)
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.helper = FormHelper()
-        self.helper.form_id = 'id-exampleForm'
-        self.helper.form_class = 'blueForms'
-        self.helper.form_method = 'post'
-        self.helper.form_action = 'submit_survey'
-
-        self.helper.add_input(Submit('submit', 'Submit'))
+        self.helper.attrs = {"novalidate": ''}
+        self.helper.layout = Layout(
+            'drivetrain',
+            'weight',
+            'length',
+            'width',
+            'robot_picture',
+            'additional_info',
+            FormHelper(),
+            Submit('submit', 'Submit'))

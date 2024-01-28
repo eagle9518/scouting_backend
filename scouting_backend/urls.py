@@ -13,19 +13,26 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include
+
+from scouting_backend import settings
 from teams import views as team_views
 from scanner import views as scanner_views
-from matches import views as matches_views
+from strategy import views as strategy_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', team_views.home, name='home'),
+    path('scanner/', scanner_views.scanner, name='scanner'),
     path('teams/', team_views.display_teams, name='teams'),
     path('teams/<int:team_number>', team_views.team_page, name='team_page'),
-    path('matches/matches_list', matches_views.matches_list, name='matches_list'),
-    path('matches/<slug:quantifier>/<int:match_number>/<int:team_number>', matches_views.match_summaries, name='match_summaries'),
-    path('scanner/', scanner_views.scanner, name='scanner'),
-    path('pit_scouting/', team_views.pit_scouting, name='pit_scouting'),
+    path('pit_scouting/<int:team_number>', team_views.pit_scouting, name='pit_scouting'),
+    path('strategy/rankings', strategy_views.rankings, name='rankings'),
+    path('strategy/dashboard', strategy_views.rankings, name='rankings'),
+    path('strategy/picklist', strategy_views.rankings, name='rankings'),
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

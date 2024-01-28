@@ -1,9 +1,28 @@
 {% extends 'index.html' %}
+{% load static %}
 
 {% block Title %} Team {{ team.team_number }}{% endblock %}
 
 {% block Content %}
     <h2>Team {{ team.team_number }}</h2>
+    {% if team.pit_scout_status == True %}
+        <div class="row">
+            <div class="col-9">
+                <span><b>Drivetrain: </b>{{ team.drivetrain }}</span> <br>
+                <span><b>Length x Width: </b>{{ team.length }} x {{ team.width }}</span> <br>
+                <span><b>Weight: </b>{{ team.weight }}</span> <br>
+                <span><b>Additional Info: </b> {{ team.additional_info }}</span> <br>
+                <a href="{% url "pit_scouting" team.team_number %}">Update Info</a>
+
+            </div>
+            <div class="col-3">
+                <img src="{{ team.robot_picture.url }}" alt="Robot Picture">
+            </div>
+        </div>
+    {% else %}
+        <a href="{% url "pit_scouting" team.team_number %}">Pit Scout Now</a>
+    {% endif %}
+
     <table class="table table-responsive">
         <thead>
         <tr>

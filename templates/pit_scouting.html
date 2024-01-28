@@ -4,11 +4,16 @@
 
 {% block Title %} Pit Scouting {% endblock %}
 
-{% block Content %} 
-<h2>Pit Scouting</h2>
-<form method="POST">
-    {% csrf_token %}
-    {% crispy form.helper %}
-    <input type="submit" value="Submit">
-</form>
+{% block Styles %}
+    <style>
+        .asteriskField {
+            display: none;
+        }
+    </style>
+{% endblock %}
+
+{% block Content %}
+    <h2>Pit Scouting</h2>
+    <h3>Team {{ team_number }}</h3>
+    {% crispy form %}
 {% endblock %}
