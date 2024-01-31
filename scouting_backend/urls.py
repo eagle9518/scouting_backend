@@ -30,8 +30,8 @@ urlpatterns = [
     path('teams/<int:team_number>', team_views.team_page, name='team_page'),
     path('pit_scouting/<int:team_number>', team_views.pit_scouting, name='pit_scouting'),
     path('strategy/rankings', strategy_views.rankings, name='rankings'),
-    path('strategy/dashboard', strategy_views.rankings, name='rankings'),
-    path('strategy/picklist', strategy_views.rankings, name='rankings'),
+    path('strategy/dashboard', strategy_views.dashboard, name='dashboard'),
+    path('strategy/picklist', strategy_views.picklist, name='picklist'),
 ]
 
 if settings.DEBUG:

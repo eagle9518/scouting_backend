@@ -1,7 +1,5 @@
-from django.core.validators import validate_comma_separated_integer_list
 from django.db import models
 from django.db.models import Model
-from matches.models import Matches 
 
 
 class Teams(models.Model):

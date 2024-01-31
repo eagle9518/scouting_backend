@@ -20,25 +20,24 @@
                 <li class="nav-item active">
                     <a class="nav-link" href="{% url 'teams' %}">Teams</a>
                 </li>
-                <li class="nav-item active">
-                    <a class="nav-link" href="{% url 'matches_list' %}">Strategy</a>
-                </li>
-                <li class="nav-item active">
-{#                    <select class="form-select">#}
-{#                        {% for comp in comps.keys() %}#}
-{#                                <option id="{{ comp }}" value="{{ comp }}">{{ comps[comp] }}</option>#}
-{#                        {% endfor %}#}
-{#                    </select>#}
-                </li>
+                <li>
             </ul>
+            <div class="dropdown">
+                <button type="button" data-toggle="dropdown">Strategy</button>
+                <ul class="dropdown-menu">
+                    <li><a href="{% url 'rankings' %}">Rankings</a></li>
+                    <li><a href="{% url 'dashboard' %}">Dashboard</a></li>
+                    <li><a href="{% url 'picklist' %}">Picklist</a></li>
+                </ul>
+            </div>
         </div>
     </nav>
     <br>
     <br>
     <br>
     <div class="container">
-    {% block Content %}
-    {% endblock %}
+        {% block Content %}
+        {% endblock %}
     </div>
 {% endblock %}
 </body>
