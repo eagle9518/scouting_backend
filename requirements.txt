@@ -16,3 +16,4 @@ tzdata==2022.7
 urllib3==1.26.14
 cloudinary~=1.38.0
 gunicorn
+psycopg2-binary
