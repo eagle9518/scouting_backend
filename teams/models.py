@@ -9,7 +9,7 @@ class Teams(models.Model):
     weight = models.IntegerField(blank=True, null=True)
     length = models.IntegerField(blank=True, null=True)
     width = models.IntegerField(blank=True, null=True)
-    additional_info = models.IntegerField(blank=True, null=True)
+    additional_info = models.CharField(max_length=256, blank=True, null=True)
     pit_scout_status = models.BooleanField()
 
 
@@ -33,5 +33,5 @@ class Team_Match_Data(models.Model):
 
     driver_ranking = models.IntegerField()
     defense_ranking = models.IntegerField()
-    comment = models.CharField(max_length=128)
+    comment = models.CharField(max_length=256)
     scout_name = models.CharField(max_length=32)

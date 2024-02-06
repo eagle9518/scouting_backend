@@ -1,5 +1,46 @@
 {% extends 'index.html' %}
 
 {% block Content %}
+    <div class="container">
+        <h1>Dashboard</h1>
 
+        <form>
+            <label for="match"></label><input id="match" placeholder="Match" type="text">
+            <button id="button" type="button">Submit</button>
+        </form>
+        <br>
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col"></th>
+                <th scope="col">Team</th>
+                <th scope="col">A-Notes</th>
+                <th scope="col">T-Notes</th>
+                <th scope="col">Traps</th>
+                <th scope="col">Climb</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for team_number, team_averages in red_alliance.items %}
+                <tr>
+                    <th scope="row">Red {{ forloop.counter }}</th>
+                    <td>{{ team_number }}</td>
+                    {% for stat in team_averages %}
+                        <td>{{ stat }}</td>
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+            <td colspan=8 style="line-height:12px;">&nbsp;</td>
+            {% for team_number, team_averages in blue_alliance.items %}
+                <tr>
+                    <th scope="row">Blue {{ forloop.counter }}</th>
+                    <td>{{ team_number }}</td>
+                    {% for stat in team_averages %}
+                        <td>{{ stat }}</td>
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
 {% endblock %}

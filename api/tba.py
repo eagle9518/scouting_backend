@@ -29,4 +29,15 @@ def get_teams_list():
     return teams_at_event
 
 
+def get_single_match(match_id):
+    match_key = event_key + "_" + match_id
+    raw_match = requests.get(f"https://www.thebluealliance.com/api/v3/match/{match_key}/simple",
+                             headers={"X-TBA-Auth-Key": X_TBA_Auth_Key}).json()
 
+    match = {"red": [], "blue": []}
+    for red_team in raw_match["alliances"]["red"]["team_keys"]:
+        match["red"].append(red_team.split("frc")[1])
+    for blue_team in raw_match["alliances"]["blue"]["team_keys"]:
+        match["blue"].append(blue_team.split("frc")[1])
+
+    return match

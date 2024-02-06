@@ -3,3 +3,8 @@
 db.sqlite3
 .env
 /venv
+/scanner/__pycache__
+/scouting_backend/__pycache__
+/strategy/__pycache__
+/teams/__pycache__
+/account/__pycache__
