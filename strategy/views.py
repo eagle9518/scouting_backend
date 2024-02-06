@@ -11,13 +11,6 @@ def rankings(request):
     for team in teams:
         team_averages[team.team_number] = fetch_team_match_averages(team.team_number)
 
-    team_averages = models.Team_Match_Data.objects.filter(team=498).team_match_data.aggregate(Avg('auto_amp', default=0),
-                                                    Avg('auto_speaker_make', default=0),
-                                                    Avg('teleop_amp', default=0),
-                                                    Avg('teleop_speaker_make', default=0),
-                                                    Avg('trap', default=0),
-                                                    Avg('climb', default=0))
-
     return render(request, "rankings.html", {'team_averages': team_averages})
 
 
