@@ -43,7 +43,7 @@
         <tbody>
         {% for match in all_team_match_data %}
             <tr>
-                <td><a href="{% url 'match_summaries' match.quantifier match.match_number team.team_number %}"><div style="white-space: nowrap; overflow: hidden;">{{ match.quantifier }} {{ match.match_number }}</div></a></td>
+                <td>{{ match.quantifier }} {{ match.match_number }}</td>
                 <td>{{ match.auto_leave }}</td>
                 <td>{{ match.auto_amp }}</td>
                 <td>{{ match.auto_speaker_make}}</td>

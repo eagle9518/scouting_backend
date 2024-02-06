@@ -4,18 +4,19 @@ from django.db.models import Avg
 
 
 def rankings(request):
-    # teams = models.Teams.objects.all()
-    # d = {}
-    # for team in teams:
-    #     d[team.team_number] = []
-    #     team_matches = models.Team_Match_Data.objects.filter(team=team)
-    #     d[team.team_number].append(team_matches.aggregate(Avg('auto_amp'))['auto_amp'] + team_matches.aggregate(Avg('auto_speaker_make'))['auto_speaker_make'])
-    #     d[team.team_number].append(team_matches.aggregate(Avg('teleop_amp'))['teleop_amp'] + team_matches.aggregate(Avg('teleop_speaker_make'))['teleop_speaker_make'])
-    #     d[team.team_number].append(team_matches.aggregate(Avg('trap'))['trap'])
-    #     d[team.team_number].append(team_matches.aggregate(Avg('climb'))['climb'])
-    d = models.Team_Match_Data.objects.filter(team=models.Teams.objects.get(team_number=498)).aggregate(average_notes=Avg('auto_amp'))['average_notes']
+    teams = models.Teams.objects.all()
+    team_averages = {}
+    for team in teams:
+        team_match_data = models.Team_Match_Data.objects.filter(team=team)
+        if team_match_data.exists():
+            team_match_averages = team_match_data.aggregate(Avg('auto_amp'), Avg('auto_speaker_make'), Avg('teleop_amp'), Avg('teleop_speaker_make'), Avg('trap'), Avg('climb'))
+            team_averages[team.team_number] = [team.team_number,
+                                               team_match_averages['auto_amp__avg'] + team_match_averages['auto_speaker_make__avg'],
+                                               team_match_averages['teleop_amp__avg'] + team_match_averages['teleop_speaker_make__avg'],
+                                               team_match_averages['trap__avg'],
+                                               team_match_averages['climb__avg']]
 
-    return render(request, "rankings.html", {'d': d})
+    return render(request, "rankings.html", {'team_averages': team_averages})
 
 
 def dashboard(request):

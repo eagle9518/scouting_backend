@@ -33,7 +33,7 @@ def scanner(request):
             teleop_speaker_make=data_from_post["teleopSpeakerMake"],
             teleop_speaker_miss=data_from_post["teleopSpeakerMiss"],
 
-            trap=data_from_post["trapTotal"],
+            trap=data_from_post["trapNumber"],
             climb=data_from_post["endClimb"],
 
             driver_ranking=data_from_post["driverRanking"],

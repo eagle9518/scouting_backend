@@ -14,7 +14,13 @@
         </tr>
         </thead>
         <tbody>
-        <tr><td>{{ d }}</td></tr>
+        {% for team_number, team_stats in team_averages.items %}
+            <tr>
+                {% for stat in team_stats %}
+                    <td>{{ stat }}</td>
+                {% endfor %}
+            </tr>
+        {% endfor %}
         </tbody>
     </table>
 {% endblock %}
