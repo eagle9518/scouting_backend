@@ -17,13 +17,13 @@ def display_teams(request):
             Teams.objects.create(team_number=team["team_number"], pit_scout_status=False)
 
     all_teams = Teams.objects.order_by("team_number")
-    return render(request, 'view_teams.html', {'all_teams': all_teams})
+    return render(request, 'teams/view_teams.html', {'all_teams': all_teams})
 
 
 def team_page(request, team_number):
     team, created = Teams.objects.get_or_create(team_number=team_number)
     all_team_match_data = Team_Match_Data.objects.filter(team=team).order_by("quantifier", "-match_number")
-    return render(request, 'team_page.html', {'team': team, 'all_team_match_data': all_team_match_data})
+    return render(request, 'teams/team_page.html', {'team': team, 'all_team_match_data': all_team_match_data})
 
 
 def pit_scouting(request, team_number):
@@ -42,5 +42,5 @@ def pit_scouting(request, team_number):
             return redirect("teams")
     else:
         form = NewPitScoutingData()
-    return render(request, "pit_scouting.html", {'form': form, 'team_number': team_number})
+    return render(request, "teams/pit_scouting.html", {'form': form, 'team_number': team_number})
 

@@ -11,7 +11,7 @@ def rankings(request):
     for team in teams:
         team_averages[team.team_number] = fetch_team_match_averages(team.team_number)
 
-    return render(request, "rankings.html", {'team_averages': team_averages})
+    return render(request, "strategy/rankings.html", {'team_averages': team_averages})
 
 
 def dashboard(request):
@@ -23,11 +23,11 @@ def dashboard(request):
     for blue_team in match['blue']:
         blue_json[blue_team] = fetch_team_match_averages(blue_team)
 
-    return render(request, "dashboard.html", {'red_alliance': red_json, 'blue_alliance': blue_json})
+    return render(request, "strategy/dashboard.html", {'red_alliance': red_json, 'blue_alliance': blue_json})
 
 
 def picklist(request):
-    return render(request, "picklist.html")
+    return render(request, "strategy/picklist.html")
 
 
 def fetch_team_match_averages(team):
