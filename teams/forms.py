@@ -30,5 +30,4 @@ class NewPitScoutingData(forms.Form):
             'width',
             'robot_picture',
             'additional_info',
-            FormHelper(),
             Submit('submit', 'Submit'))
