@@ -45,7 +45,7 @@ def scanner(request):
         response = {"confirmation": "Successfully Sent"}
         return JsonResponse(response)
 
-    return render(request, 'scanner/qr_scanner.html')
+    return render(request, 'qr_scanner.html')
 
 
 # def points_calculator(json_data, auto_grid_list, teleop_grid_list):
