@@ -18,3 +18,4 @@ cloudinary~=1.38.0
 gunicorn
 psycopg2-binary
 whitenoise
+python-dotenv~=1.0.1

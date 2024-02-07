@@ -33,6 +33,3 @@ urlpatterns = [
     path('strategy/dashboard', strategy_views.dashboard, name='dashboard'),
     path('strategy/picklist', strategy_views.picklist, name='picklist'),
 ]
-
-if settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

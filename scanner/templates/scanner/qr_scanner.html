@@ -3,7 +3,7 @@
 
 {% block Title %} Scanner {% endblock %}
 
-{% block Styles %} <link rel="stylesheet" href="{% static 'scanner/scanner.css' %}"> {% endblock %}
+{% block Styles %} <link rel="stylesheet" href="{% static 'scanner.css' %}"> {% endblock %}
 
 {% block Content %}
     {% csrf_token %}
@@ -19,4 +19,4 @@
     <hr>
 {% endblock %}
 
-{% block Scripts %} <script type="module" src="{% static 'scanner/scanner.js' %}"></script> {% endblock %}
+{% block Scripts %} <script type="module" src="{% static 'scanner.js' %}"></script> {% endblock %}

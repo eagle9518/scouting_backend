@@ -1,4 +1,4 @@
-import QrScanner from "/static/imported/qr-scanner.min.js";
+import QrScanner from "/scanner/static/sqr-scanner.min.js";
 
 const video = document.getElementById('qr-video');
 const camQrResult = document.getElementById('cam-qr-result');

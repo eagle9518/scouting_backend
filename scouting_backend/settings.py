@@ -10,32 +10,36 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 import os
+import os
+import random
+import string
 from pathlib import Path
 
-import dj_database_url
+from dotenv import load_dotenv
+
+load_dotenv()  # take environment variables from .env.
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
+# SECURITY WARNING: keep the secret key used in production secret!
+SECRET_KEY = os.environ.get('SECRET_KEY')
+if not SECRET_KEY:
+    SECRET_KEY = ''.join(random.choice(string.ascii_lowercase) for i in range(32))
 
-SECRET_KEY = os.environ.get('SECRET_KEY', default='your secret key')
-DEBUG = True #'RENDER' not in os.environ
+# Render Deployment Code
+DEBUG = True  # 'RENDER' not in os.environ
 
-ALLOWED_HOSTS = []
+# Docker HOST
+ALLOWED_HOSTS = ['localhost', '127.0.0.1']
+
+# Add here your deployment HOSTS
+CSRF_TRUSTED_ORIGINS = ['http://localhost:8000', 'http://localhost:5085', 'http://127.0.0.1:8000',
+                        'http://127.0.0.1:5085']
 
 RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
 if RENDER_EXTERNAL_HOSTNAME:
     ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
-
-DATABASES = {
-    'default': dj_database_url.config(
-        # Feel free to alter this value to suit your needs.
-        default=os.environ.get("DATBASE_URL"),
-        conn_max_age=600
-    )
-}
 
 # Application definition
 INSTALLED_APPS = [
@@ -45,6 +49,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
     'crispy_forms',
     'crispy_bootstrap4',
     'account',
@@ -65,18 +70,22 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'scouting_backend.urls'
 
+UI_TEMPLATES = [os.path.join(BASE_DIR, 'templates'),
+                os.path.join('scanner', 'templates', 'scanner'),
+                os.path.join('teams', 'templates', 'teams'),
+                os.path.join('strategy', 'templates', 'strategy')]
+
 TEMPLATES = [
     {
-        'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates']
-        ,
-        'APP_DIRS': True,
-        'OPTIONS': {
-            'context_processors': [
-                'django.template.context_processors.debug',
-                'django.template.context_processors.request',
-                'django.contrib.auth.context_processors.auth',
-                'django.contrib.messages.context_processors.messages',
+        "BACKEND": "django.template.backends.django.DjangoTemplates",
+        "DIRS": UI_TEMPLATES,
+        "APP_DIRS": True,
+        "OPTIONS": {
+            "context_processors": [
+                "django.template.context_processors.debug",
+                "django.template.context_processors.request",
+                "django.contrib.auth.context_processors.auth",
+                "django.contrib.messages.context_processors.messages",
             ],
         },
     },
@@ -87,12 +96,31 @@ WSGI_APPLICATION = 'scouting_backend.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
+DB_ENGINE = os.getenv('DB_ENGINE', None)
+DB_USERNAME = os.getenv('DB_USERNAME', None)
+DB_PASS = os.getenv('DB_PASS', None)
+DB_HOST = os.getenv('DB_HOST', None)
+DB_PORT = os.getenv('DB_PORT', None)
+DB_NAME = os.getenv('DB_NAME', None)
+
+if DB_ENGINE and DB_NAME and DB_USERNAME:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.' + DB_ENGINE,
+            'NAME': DB_NAME,
+            'USER': DB_USERNAME,
+            'PASSWORD': DB_PASS,
+            'HOST': DB_HOST,
+            'PORT': DB_PORT,
+        },
+    }
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': 'db.sqlite3',
+        }
+    }
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
@@ -126,18 +154,18 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
-# This setting tells Django at which URL static files are going to be served to the user.
-# Here, they well be accessible at your-domain.onrender.com/static/...
 STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'static'),
+    os.path.join(BASE_DIR, 'scanner', 'static', 'scanner'),
+    os.path.join(BASE_DIR, 'teams', 'static', 'teams'),
+    os.path.join(BASE_DIR, 'strategy', 'static', 'strategy'),
+)
 
 # Following settings only make sense on production and may break development environments.
-if True:
-    # Tell Django to copy statics to the `staticfiles` directory
-    # in your application directory on Render.
-    STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-
-    # Turn on WhiteNoise storage backend that takes care of compressing static files
-    # and creating unique names for each version so they can safely be cached forever.
+if not DEBUG:
     STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # Default primary key field type
@@ -145,5 +173,4 @@ if True:
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-MEDIA_URL = '/media/'
+LOGIN_REDIRECT_URL = '/'
