@@ -31,7 +31,7 @@ def picklist(request):
 
 
 def fetch_team_match_averages(team):
-    team_match_data = models.Team_Match_Data.objects.filter(team=team)
+    team_match_data = models.Team_Match_Data.objects.filter(team=models.Teams.objects.get(team_number=team))
     team_match_averages = team_match_data.aggregate(Avg('auto_amp', default=0),
                                                     Avg('auto_speaker_make', default=0),
                                                     Avg('teleop_amp', default=0),
@@ -39,7 +39,7 @@ def fetch_team_match_averages(team):
                                                     Avg('trap', default=0),
                                                     Avg('climb', default=0))
 
-    return [team_match_averages['auto_amp__avg'] + team_match_averages['auto_speaker_make__avg'],
-            team_match_averages['teleop_amp__avg'] + team_match_averages['teleop_speaker_make__avg'],
-            team_match_averages['trap__avg'],
-            team_match_averages['climb__avg']]
+    return {'auto': team_match_averages['auto_amp__avg'] + team_match_averages['auto_speaker_make__avg'],
+            'teleop': team_match_averages['teleop_amp__avg'] + team_match_averages['teleop_speaker_make__avg'],
+            'trap': team_match_averages['trap__avg'],
+            'climb': team_match_averages['climb__avg']}

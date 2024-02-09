@@ -36,7 +36,7 @@ function sortTable(n, className) {
             y = rows[i + 1].getElementsByTagName("TD")[n];
             /* Check if the two rows should switch place,
             based on the direction, asc or desc: */
-            if (dir === "asc") {
+            if (dir === "asc" || className === "team_number") {
                 console.log(parseFloat(x.innerHTML))
                 console.log(parseFloat(y.innerHTML))
                 if (parseFloat(x.innerHTML) > parseFloat(y.innerHTML)) {

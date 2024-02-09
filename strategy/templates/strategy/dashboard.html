@@ -25,17 +25,18 @@
                 <tr>
                     <th scope="row">Red {{ forloop.counter }}</th>
                     <td>{{ team_number }}</td>
-                    {% for stat in team_averages %}
+                    {% for stat_type, stat in team_averages.items %}
                         <td>{{ stat }}</td>
                     {% endfor %}
                 </tr>
             {% endfor %}
+            <tr></tr>
             <td colspan=8 style="line-height:12px;">&nbsp;</td>
             {% for team_number, team_averages in blue_alliance.items %}
                 <tr>
                     <th scope="row">Blue {{ forloop.counter }}</th>
                     <td>{{ team_number }}</td>
-                    {% for stat in team_averages %}
+                    {% for stat_type, stat in team_averages.items %}
                         <td>{{ stat }}</td>
                     {% endfor %}
                 </tr>

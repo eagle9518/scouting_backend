@@ -27,15 +27,15 @@
         <thead>
         <tr>
             <th>Match</th>
-            <th>A-Leave</th>
-            <th>A-Amp</th>
-            <th>A-Speaker</th>
-            <th>T-Amp</th>
-            <th>T-Speaker</th>
+            <th>Leave</th>
+            <th>Amp</th>
+            <th>Speaker</th>
+            <th>Amp</th>
+            <th>Speaker</th>
             <th>Trap</th>
             <th>Climb</th>
-            <th>Driver Ranking</th>
-            <th>Defense Ranking</th>
+            <th>Driver</th>
+            <th>Defense</th>
             <th>Comments</th>
             <th>Name</th>
         </tr>
@@ -43,7 +43,7 @@
         <tbody>
         {% for match in all_team_match_data %}
             <tr>
-                <td>{{ match.quantifier }} {{ match.match_number }}</td>
+                <td style="white-space: nowrap">{{ match.quantifier }} {{ match.match_number }}</td>
                 <td>{{ match.auto_leave }}</td>
                 <td>{{ match.auto_amp }}</td>
                 <td>{{ match.auto_speaker_make}}</td>
