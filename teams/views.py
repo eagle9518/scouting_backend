@@ -1,9 +1,20 @@
-from django.shortcuts import render, get_object_or_404, redirect
+import os
 
-from scouting_backend import settings
+import cloudinary
+import cloudinary.api
+import cloudinary.uploader
+from django.shortcuts import render, redirect
+
+from api.tba import get_teams_list
 from teams.models import Teams, Team_Match_Data
-from api.tba import get_team_events, get_teams_list, get_match_schedule
 from .forms import NewPitScoutingData
+
+cloudinary.config(
+    cloud_name=os.environ.get("CLOUD_NAME"),
+    api_key=os.environ.get("CLOUD_API_KEY"),
+    api_secret=os.environ.get("CLOUD_API_SECRET"),
+    secure=True
+)
 
 
 def home(request):
@@ -30,12 +41,18 @@ def pit_scouting(request, team_number):
     if request.method == 'POST':
         form = NewPitScoutingData(request.POST, request.FILES)
         if form.is_valid():
+            image_response = cloudinary.uploader.upload(request.FILES['robot_picture'])
+            img_url = image_response["secure_url"]
+            image_url_list = img_url.split("upload/")
+            image_url_list.insert(1, "upload/w_0.4,c_scale/")
+            img_url = "".join(image_url_list)
+
             Teams.objects.filter(team_number=team_number).update(
                 drivetrain=form.cleaned_data.get('drivetrain'),
                 weight=form.cleaned_data.get('weight'),
                 length=form.cleaned_data.get('length'),
                 width=form.cleaned_data.get('width'),
-                robot_picture=form.cleaned_data.get('robot_picture'),
+                robot_picture=img_url,
                 additional_info=form.cleaned_data.get('additional_info'),
                 pit_scout_status=True
             )
@@ -43,4 +60,3 @@ def pit_scouting(request, team_number):
     else:
         form = NewPitScoutingData()
     return render(request, "teams/pit_scouting.html", {'form': form, 'team_number': team_number})
-

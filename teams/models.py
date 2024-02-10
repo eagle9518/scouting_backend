@@ -4,7 +4,7 @@ from django.db.models import Model
 
 class Teams(models.Model):
     team_number = models.IntegerField(unique=True)
-    robot_picture = models.ImageField(blank=True, null=True)
+    robot_picture = models.URLField(blank=True, null=True)
     drivetrain = models.CharField(max_length=32)
     weight = models.IntegerField(blank=True, null=True)
     length = models.IntegerField(blank=True, null=True)
