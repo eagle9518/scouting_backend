@@ -1,5 +1,16 @@
 {% extends "index.html" %}
 
+{% block Styles %}
+        <style>
+        img {
+            width: 35%;
+            height: 35%;
+            margin-left: auto;
+            margin-right: auto;
+        }
+    </style>
+{% endblock %}
+
 {% block Content %}
 <div style="text-align:center">
     <h1>EagleScout</h1>
@@ -9,16 +20,6 @@
 {% endblock %}
 
 {% block Scripts %}
-    <style>
-        img {
-            width: 35%;
-            height: 35%;
-            min-width: 35%;
-            min-height: 35%;
-            margin-left: auto;
-            margin-right: auto;
-        }
-    </style>
     <script>
         const countDownDate = new Date("March 1, 2024 12:00:00").getTime();
 

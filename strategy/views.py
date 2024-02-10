@@ -1,11 +1,11 @@
 import json
 
+from django.db.models import Avg
 from django.http import JsonResponse
 from django.shortcuts import render
 
-from api.tba import get_match_schedule, get_single_match
+from api.tba import get_single_match
 from teams import models
-from django.db.models import Avg
 
 
 def rankings(request):
@@ -22,13 +22,17 @@ def dashboard(request):
         match_number = json.load(request)
         match = get_single_match("qm" + str(match_number))
         red_json = {}
+        red_teams = []
         blue_json = {}
+        blue_teams = []
         for red_team in match['red']:
             red_json[red_team] = fetch_team_match_averages(red_team)
+            red_teams.append(red_team)
         for blue_team in match['blue']:
             blue_json[blue_team] = fetch_team_match_averages(blue_team)
+            blue_teams.append(blue_team)
 
-        response = {'red': red_json, 'blue': blue_json}
+        response = {'red': red_json, 'blue': blue_json, 'red_teams': red_teams, 'blue_teams': blue_teams}
         return JsonResponse(response)
 
     return render(request, "strategy/dashboard.html")
@@ -47,7 +51,8 @@ def fetch_team_match_averages(team):
                                                     Avg('trap', default=0),
                                                     Avg('climb', default=0))
 
-    return {'auto': team_match_averages['auto_amp__avg'] + team_match_averages['auto_speaker_make__avg'],
+    return {'team_number': team,
+            'auto': team_match_averages['auto_amp__avg'] + team_match_averages['auto_speaker_make__avg'],
             'teleop': team_match_averages['teleop_amp__avg'] + team_match_averages['teleop_speaker_make__avg'],
             'trap': team_match_averages['trap__avg'],
             'climb': team_match_averages['climb__avg']}

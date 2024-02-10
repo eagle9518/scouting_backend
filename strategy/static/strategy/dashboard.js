@@ -1,3 +1,5 @@
+const scoringFields = ["team_number", "auto", "teleop", "trap", "climb"];
+
 document.getElementById("match_button").onclick = () => {
     let match = document.getElementById("match").value
     fetch("", {
@@ -17,25 +19,31 @@ document.getElementById("match_button").onclick = () => {
         .then(data => {
             console.log(data)
             let dashboardTable = document.getElementById("dashboardTable");
-            for (let redTeam in data["red"]) {
-                let redTeamRow = document.createElement("tr");
-                for (let redTeamStat in data["red"][redTeam]) {
-                    let redTeamData = document.createElement("td");
-                    redTeamData.appendChild(document.createTextNode(data["red"][redTeam][redTeamStat]));
-                    redTeamRow.appendChild(redTeamData);
+            for (let alliance_number = 0; alliance_number < data["red_teams"].length; alliance_number++) {
+                let redTeam = data["red_teams"][alliance_number];
+                let redTeamRow = dashboardTable.insertRow();
+
+                let redTeamScoringField = redTeamRow.insertCell();
+                redTeamScoringField.appendChild(document.createTextNode("Red ".concat((alliance_number+1).toString())));
+
+                for (let scoringField of scoringFields) {
+                    let redTeamScoringField = redTeamRow.insertCell();
+                    redTeamScoringField.appendChild(document.createTextNode(data["red"][redTeam][scoringField]));
                 }
-                dashboardTable.appendChild(redTeamRow);
             }
-                // let redTeam = document.createElement("tr");
-                // console.log(data["red"][redIndex])
-                // for (let redTeamStatIndex = 0; redTeamStatIndex < Object.keys(data["red"][redIndex]).length; redTeamStatIndex++) {
-                //     console.log(data["red"][redIndex][redTeamStatIndex]);
-                //     let redTeamStat = document.createElement("td");
-                //     redTeamStat.appendChild(document.createTextNode(data["red"][redIndex][redTeamStatIndex]));
-                //     redTeam.appendChild(redTeamStat);
-                //   }
-                // dashboardTable.appendChild(redTeam);
-                // }
+
+            for (let alliance_number = 0; alliance_number < data["blue_teams"].length; alliance_number++) {
+                let blueTeam = data["blue_teams"][alliance_number];
+                let blueTeamRow = dashboardTable.insertRow();
+
+                let redTeamScoringField = blueTeamRow.insertCell();
+                redTeamScoringField.appendChild(document.createTextNode("Blue ".concat((alliance_number+1).toString())));
+
+                for (let scoringField of scoringFields) {
+                    let redTeamScoringField = blueTeamRow.insertCell();
+                    redTeamScoringField.appendChild(document.createTextNode(data["blue"][blueTeam][scoringField]));
+                }
+            }
         })
 }
 

@@ -56,7 +56,7 @@ def pit_scouting(request, team_number):
                 additional_info=form.cleaned_data.get('additional_info'),
                 pit_scout_status=True
             )
-            return redirect("teams")
+            return redirect("team_page", team_number=team_number)
     else:
         form = NewPitScoutingData()
     return render(request, "teams/pit_scouting.html", {'form': form, 'team_number': team_number})
