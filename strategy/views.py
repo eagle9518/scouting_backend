@@ -1,3 +1,6 @@
+import json
+
+from django.http import JsonResponse
 from django.shortcuts import render
 
 from api.tba import get_match_schedule, get_single_match
@@ -15,15 +18,20 @@ def rankings(request):
 
 
 def dashboard(request):
-    match = get_single_match("qm1")
-    red_json = {}
-    blue_json = {}
-    for red_team in match['red']:
-        red_json[red_team] = fetch_team_match_averages(red_team)
-    for blue_team in match['blue']:
-        blue_json[blue_team] = fetch_team_match_averages(blue_team)
+    if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+        match_number = json.load(request)
+        match = get_single_match("qm" + str(match_number))
+        red_json = {}
+        blue_json = {}
+        for red_team in match['red']:
+            red_json[red_team] = fetch_team_match_averages(red_team)
+        for blue_team in match['blue']:
+            blue_json[blue_team] = fetch_team_match_averages(blue_team)
 
-    return render(request, "strategy/dashboard.html", {'red_alliance': red_json, 'blue_alliance': blue_json})
+        response = {'red': red_json, 'blue': blue_json}
+        return JsonResponse(response)
+
+    return render(request, "strategy/dashboard.html")
 
 
 def picklist(request):
