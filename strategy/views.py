@@ -7,7 +7,9 @@ from django.shortcuts import render
 from api.tba import get_single_match
 from teams import models
 
+from helpers import login_required
 
+@login_required
 def rankings(request):
     teams = models.Teams.objects.all().order_by("team_number")
     team_averages = {}

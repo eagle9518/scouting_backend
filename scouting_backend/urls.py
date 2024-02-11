@@ -21,6 +21,7 @@ from scouting_backend import settings
 from teams import views as team_views
 from scanner import views as scanner_views
 from strategy import views as strategy_views
+from authenticate import views as auth_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -32,4 +33,5 @@ urlpatterns = [
     path('strategy/rankings', strategy_views.rankings, name='rankings'),
     path('strategy/dashboard', strategy_views.dashboard, name='dashboard'),
     path('strategy/picklist', strategy_views.picklist, name='picklist'),
+    path("auth/", include("authenticate.urls"))
 ]
