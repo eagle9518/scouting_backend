@@ -27,7 +27,7 @@ client_config = {
         ],
         "javascript_origins": [
             "https://silver-chainsaw-4w5jqgp7xw4fjx96-8000.app.github.dev",
-            "https://eagleforce-backend.onrender.com/"
+            "https://eagleforce-backend.onrender.com"
         ]
     }
 }
@@ -58,7 +58,7 @@ def oauth2callback(request):
     flow = google_auth_oauthlib.flow.Flow.from_client_config(
         client_config=client_config, scopes=SCOPES) # , state=state
     flow.redirect_uri = request.build_absolute_uri(reverse('oauth2callback')) #"https://silver-chainsaw-4w5jqgp7xw4fjx96-8000.app.github.dev/auth/oauth2callback"
-    
+
     # Use the authorization server's response to fetch the OAuth 2.0 tokens.
     authorization_response = request.build_absolute_uri()
     flow.fetch_token(authorization_response=authorization_response)
