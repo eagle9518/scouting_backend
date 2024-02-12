@@ -36,3 +36,7 @@ class Team_Match_Data(models.Model):
     defense_ranking = models.IntegerField()
     comment = models.CharField(max_length=256)
     scout_name = models.CharField(max_length=32)
+
+    human_player_timing = models.IntegerField(default=-1)
+    human_player_spotlit = models.IntegerField(default=-1)
+    strategist_name = models.CharField(max_length=32, default="")

@@ -1,10 +1,10 @@
 {% extends 'index.html' %}
 {% load static %}
 
-{% block Title %} Team {{ team.team_number }}{% endblock %}
+{% block Title %} Team {{ team_number }}{% endblock %}
 
 {% block Content %}
-    <h2>Team {{ team.team_number }}</h2>
+    <h2>Team {{ team_number }}</h2>
     {% if team.pit_scout_status == True %}
         <div class="row">
             <div class="col-9">
@@ -20,7 +20,7 @@
             </div>
         </div>
     {% else %}
-        <a href="{% url "pit_scouting" team.team_number %}">Pit Scout Now</a>
+        <a style="color:red" href="{% url "pit_scouting" team_number %}">Pit Scout Now</a>
     {% endif %}
 
     <table class="table table-responsive">
@@ -37,7 +37,11 @@
             <th>Driver</th>
             <th>Defense</th>
             <th>Comments</th>
-            <th>Name</th>
+            <th>Scout Name</th>
+
+            <th>Timing</th>
+            <th>Spotlit</th>
+            <th>Strategist Name</th>
         </tr>
         </thead>
         <tbody>
@@ -46,7 +50,7 @@
                 <td style="white-space: nowrap">{{ match.quantifier }} {{ match.match_number }}</td>
                 <td>{{ match.auto_leave }}</td>
                 <td>{{ match.auto_amp }}</td>
-                <td>{{ match.auto_speaker_make}}</td>
+                <td>{{ match.auto_speaker_make }}</td>
                 <td>{{ match.teleop_amp }}</td>
                 <td>{{ match.teleop_speaker_make }}</td>
                 <td>{{ match.trap }}</td>
@@ -55,6 +59,24 @@
                 <td>{{ match.defense_ranking }}</td>
                 <td>{{ match.comment }}</td>
                 <td>{{ match.scout_name }}</td>
+                <td>{% if match.human_player_timing == -1 %}
+                        N/A
+                    {% else %}
+                        {{ match.human_player_timing }}
+                    {% endif %}
+                </td>
+                <td>{% if match.human_player_spotlit == -1 %}
+                        N/A
+                    {% else %}
+                        {{ match.human_player_spotlit }}
+                    {% endif %}
+                </td>
+                <td>{% if match.strategist_name == "" %}
+                        N/A
+                    {% else %}
+                        {{ match.strategist_name }}
+                    {% endif %}
+                </td>
             </tr>
         {% endfor %}
         </tbody>
