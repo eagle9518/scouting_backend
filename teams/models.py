@@ -13,9 +13,9 @@ class Teams(models.Model):
     pit_scout_status = models.BooleanField()
 
 
-# TODO Somehow connect quantifier and match_number to Matches via Foreign Key...
 class Team_Match_Data(models.Model):
     team = models.ForeignKey(Teams, related_name='team_match_data', on_delete=models.CASCADE)
+    event = models.CharField(max_length=16, default="testing")
     match_number = models.IntegerField()
     quantifier = models.CharField(max_length=10)
 

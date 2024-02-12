@@ -7,8 +7,9 @@ event_key = "2023azgl"
 
 
 def get_team_events():
-    team_events = requests.get(f"https://www.thebluealliance.com/api/v3/team/{team_key}/events/{year}/keys",
-                               headers={"X-TBA-Auth-Key": X_TBA_Auth_Key}).json()
+    team_events = requests.get(f"https://www.thebluealliance.com/api/v3/team/{team_key}/events/{year}",
+                               headers={"X-TBA-Auth-Key": X_TBA_Auth_Key})
+
     events = {}
     for event in team_events.json():
         events[event["key"]] = event["short_name"]

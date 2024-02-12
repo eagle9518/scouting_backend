@@ -24,8 +24,10 @@
                         <li><a href="{% url 'dashboard' %}">Dashboard</a></li>
                     </ul>
                 </li>
-                <li id="login"><a href="/login">Login</a></li>
-                <li id="signup"><a href="/signup">Signup</a></li>
+                <li class="nav-item">
+                    <select class="form-select" id="comp" style="margin-left: 50px; height: 40px;"></select>
+                </li>
+                <li id="login"><a href="/auth">Login</a></li>
             </ul>
         </nav>
         <div id="hamburger-icon" onclick="toggleMobileMenu(this)">
@@ -36,8 +38,7 @@
                 <li><a href="{% url "scanner" %}">Scanner</a></li>
                 <li><a href={% url "teams" %}>Teams</a></li>
                 <li><a href="/">Strategy</a></li>
-                <li id="login"><a href="/login">Login</a></li>
-                <li id="signup"><a href="/signup">Signup</a></li>
+                <li id="login"><a href="/auth">Login</a></li>
             </ul>
         </div>
     </header>
@@ -49,9 +50,53 @@
 </body>
 </html>
 <script>
+    post_data_to_server();
+
     function toggleMobileMenu(menu) {
         menu.classList.toggle('open');
     }
+
+    function post_data_to_server() {
+        fetch("/get_events/", {
+                method: 'GET',
+                credentials: 'include',
+                mode: 'same-origin'
+            }
+        )
+            .then(response => {
+                return response.json();
+            })
+            .then(data => {
+                for (let event in data) {
+                    let option = document.createElement("option");
+                    option.setAttribute("id", event);
+                    option.setAttribute("value", event);
+                    option.innerText = data[event];
+                    document.getElementById("comp").appendChild(option);
+                }
+
+                let prevComp = localStorage.getItem("comp")
+                console.log(prevComp)
+                if (prevComp == null) {
+                    localStorage.setItem("comp", document.getElementById("comp").value)
+                } else {
+                    console.log(document.getElementById("comp"))
+                    document.getElementById(prevComp).setAttribute("selected", "true")
+                }
+
+            })
+    }
+
+    document.getElementById("comp").onchange = () => {
+        localStorage.setItem("comp", document.getElementById("comp").value)
+        location.assign(window.location.origin + window.location.pathname + "?comp=" + document.getElementById("comp").value);
+    }
+
+    if (localStorage.getItem("comp") !== null && window.location.search === "") {
+        location.assign(window.location.origin + window.location.pathname + "?comp=" + localStorage.getItem("comp"));
+    }
+
+
 </script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"

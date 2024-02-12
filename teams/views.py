@@ -3,9 +3,10 @@ import os
 import cloudinary
 import cloudinary.api
 import cloudinary.uploader
+from django.http import JsonResponse
 from django.shortcuts import render, redirect
 
-from api.tba import get_teams_list
+from api.tba import get_teams_list, get_team_events
 from teams.models import Teams, Team_Match_Data
 from .forms import NewPitScoutingData
 
@@ -19,6 +20,10 @@ cloudinary.config(
 
 def home(request):
     return render(request, 'home.html')
+
+
+def get_events(request):
+    return JsonResponse(get_team_events())
 
 
 def display_teams(request):
