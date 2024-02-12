@@ -3,7 +3,6 @@ import requests
 team_key = "frc2073"
 year = 2024
 X_TBA_Auth_Key = "opXlAfkuD4tQbDm2iskpBHdyYQbarWsQoeSG8w6MSKQ0c8jtbOnbREQu7z7nfUCK"
-event_key = "2023azgl"
 
 
 def get_team_events():
@@ -18,19 +17,19 @@ def get_team_events():
     return events
 
 
-def get_match_schedule():
+def get_match_schedule(event_key):
     matches_at_event = requests.get(f"https://www.thebluealliance.com/api/v3/event/{event_key}/matches/simple",
                                     headers={"X-TBA-Auth-Key": X_TBA_Auth_Key}).json()
     return matches_at_event
 
 
-def get_teams_list():
+def get_teams_list(event_key):
     teams_at_event = requests.get(f"https://www.thebluealliance.com/api/v3/event/{event_key}/teams/simple",
                                   headers={"X-TBA-Auth-Key": X_TBA_Auth_Key}).json()
     return teams_at_event
 
 
-def get_single_match(match_id):
+def get_single_match(event_key, match_id):
     match_key = event_key + "_" + match_id
     raw_match = requests.get(f"https://www.thebluealliance.com/api/v3/match/{match_key}/simple",
                              headers={"X-TBA-Auth-Key": X_TBA_Auth_Key}).json()

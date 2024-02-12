@@ -27,22 +27,34 @@ def get_events(request):
 
 
 def display_teams(request):
-    # Loops through each team for given tournament and creates a Team object from tba.py
-    for team in get_teams_list():
-        if not Teams.objects.filter(team_number=team["team_number"]).exists():
-            Teams.objects.create(team_number=team["team_number"], pit_scout_status=False)
+    comp_code = request.GET.get('comp', "testing")
+    pit_scouted = []
+    for team in Teams.objects.filter(event=comp_code, pit_scout_status=True):
+        pit_scouted.append(team.team_number)
 
-    all_teams = Teams.objects.order_by("team_number")
-    return render(request, 'teams/view_teams.html', {'all_teams': all_teams})
+    all_teams = []
+    if comp_code == "testing":
+        for team in Teams.objects.filter(event=comp_code):
+            all_teams.append(team.team_number)
+    else:
+        for team in get_teams_list(comp_code):
+            all_teams.append(team["team_number"])
+    all_teams.sort()
+
+    return render(request, 'teams/view_teams.html', {'all_teams': all_teams, "pit_scouted": pit_scouted})
 
 
 def team_page(request, team_number):
-    team, created = Teams.objects.get_or_create(team_number=team_number)
-    all_team_match_data = Team_Match_Data.objects.filter(team=team).order_by("quantifier", "-match_number")
+    comp_code = request.GET.get('comp', "testing")
+
+    team, created = Teams.objects.get_or_create(team_number=team_number, event=comp_code)
+    all_team_match_data = Team_Match_Data.objects.filter(team_number=team_number, event=comp_code).order_by(
+        "quantifier", "-match_number")
     return render(request, 'teams/team_page.html', {'team': team, 'all_team_match_data': all_team_match_data})
 
 
 def pit_scouting(request, team_number):
+    comp_code = request.GET.get('comp')
     if request.method == 'POST':
         form = NewPitScoutingData(request.POST, request.FILES)
         if form.is_valid():
@@ -52,15 +64,17 @@ def pit_scouting(request, team_number):
             image_url_list.insert(1, "upload/w_0.4,c_scale/")
             img_url = "".join(image_url_list)
 
-            Teams.objects.filter(team_number=team_number).update(
+            Teams.objects.get_or_create(team_number=team_number, event=comp_code)
+
+            Teams.objects.filter(team_number=team_number, event=comp_code).update(
                 drivetrain=form.cleaned_data.get('drivetrain'),
                 weight=form.cleaned_data.get('weight'),
                 length=form.cleaned_data.get('length'),
                 width=form.cleaned_data.get('width'),
                 robot_picture=img_url,
                 additional_info=form.cleaned_data.get('additional_info'),
-                pit_scout_status=True
-            )
+                pit_scout_status=True)
+
             return redirect("team_page", team_number=team_number)
     else:
         form = NewPitScoutingData()

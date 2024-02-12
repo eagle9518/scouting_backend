@@ -9,9 +9,11 @@ from teams import models
 
 from helpers import login_required
 
+
 @login_required
 def rankings(request):
-    teams = models.Teams.objects.all().order_by("team_number")
+    comp_code = request.GET.get('comp')
+    teams = models.Teams.objects.filter(event=comp_code).order_by("team_number")
     team_averages = {}
     for team in teams:
         team_averages[team.team_number] = fetch_team_match_averages(team.team_number)
@@ -22,7 +24,7 @@ def rankings(request):
 def dashboard(request):
     if request.headers.get('x-requested-with') == 'XMLHttpRequest':
         match_number = json.load(request)
-        match = get_single_match("qm" + str(match_number))
+        match = get_single_match(request.GET.get('comp'), "qm" + str(match_number))
         red_json = {}
         red_teams = []
         blue_json = {}
@@ -44,8 +46,8 @@ def picklist(request):
     return render(request, "strategy/picklist.html")
 
 
-def fetch_team_match_averages(team):
-    team_match_data = models.Team_Match_Data.objects.filter(team=models.Teams.objects.get(team_number=team))
+def fetch_team_match_averages(team_number):
+    team_match_data = models.Team_Match_Data.objects.filter(team_number=team_number)
     team_match_averages = team_match_data.aggregate(Avg('auto_amp', default=0),
                                                     Avg('auto_speaker_make', default=0),
                                                     Avg('teleop_amp', default=0),
@@ -53,7 +55,7 @@ def fetch_team_match_averages(team):
                                                     Avg('trap', default=0),
                                                     Avg('climb', default=0))
 
-    return {'team_number': team,
+    return {'team_number': team_number,
             'auto': team_match_averages['auto_amp__avg'] + team_match_averages['auto_speaker_make__avg'],
             'teleop': team_match_averages['teleop_amp__avg'] + team_match_averages['teleop_speaker_make__avg'],
             'trap': team_match_averages['trap__avg'],

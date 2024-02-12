@@ -3,7 +3,7 @@ from django.db.models import Model
 
 
 class Teams(models.Model):
-    team_number = models.IntegerField(unique=True)
+    team_number = models.IntegerField()
     event = models.CharField(max_length=16, default="testing")
     robot_picture = models.URLField(blank=True, null=True)
     drivetrain = models.CharField(max_length=32)
@@ -11,11 +11,11 @@ class Teams(models.Model):
     length = models.IntegerField(blank=True, null=True)
     width = models.IntegerField(blank=True, null=True)
     additional_info = models.CharField(max_length=256, blank=True, null=True)
-    pit_scout_status = models.BooleanField()
+    pit_scout_status = models.BooleanField(default=False)
 
 
 class Team_Match_Data(models.Model):
-    team = models.ForeignKey(Teams, related_name='team_match_data', on_delete=models.CASCADE)
+    team_number = models.IntegerField()
     event = models.CharField(max_length=16, default="testing")
     match_number = models.IntegerField()
     quantifier = models.CharField(max_length=10)

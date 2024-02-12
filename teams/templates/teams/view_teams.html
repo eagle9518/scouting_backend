@@ -14,11 +14,11 @@
         <tbody>
         {% for team in all_teams %}
             <tr>
-                <td><a href="{% url 'team_page' team.team_number %}">{{ team.team_number }}</a></td>
-                {% if team.pit_scout_status == True %}
+                <td><a href="{% url 'team_page' team %}">{{ team }}</a></td>
+                {% if team in pit_scouted %}
                     <td style="color:mediumspringgreen">Pit Scouted</td>
                 {% else %}
-                    <td><a style="color:red" href="{% url 'pit_scouting' team.team_number %}">Pit Scout</a></td>
+                    <td><a style="color:red" href="{% url 'pit_scouting' team %}">Pit Scout</a></td>
                 {% endif %}
             </tr>
         {% endfor %}
