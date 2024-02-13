@@ -98,6 +98,6 @@ def human_player_submit(request):
 
         HumanPlayerMatch(team_number=team_num, event=event, match_number=match_num, human_player_timing=timing, human_player_spotlit=notes, strategist_name=name).save()
 
-        return redirect("/strategy/")
+        return redirect(f"/teams/{team_num}?comp={event}/")
     else:
         return render(request, "teams/human_player_scout.html")
