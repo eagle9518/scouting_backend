@@ -40,7 +40,7 @@ def authorize(request):
     # for the OAuth 2.0 client, which you configured in the API Console. If this
     # value doesn't match an authorized URI, you will get a 'redirect_uri_mismatch'
     # error.
-    flow.redirect_uri = request.build_absolute_uri(reverse('oauth2callback'))#"https://silver-chainsaw-4w5jqgp7xw4fjx96-8000.app.github.dev/auth/oauth2callback" 
+    flow.redirect_uri = request.build_absolute_uri(reverse('oauth2callback')) #"https://silver-chainsaw-4w5jqgp7xw4fjx96-8000.app.github.dev/auth/oauth2callback" #
 
     authorization_url, state = flow.authorization_url(
         # Enable offline access so that you can refresh an access token without
@@ -57,7 +57,7 @@ def authorize(request):
 def oauth2callback(request):
     flow = google_auth_oauthlib.flow.Flow.from_client_config(
         client_config=client_config, scopes=SCOPES) # , state=state
-    flow.redirect_uri = request.build_absolute_uri(reverse('oauth2callback')) #"https://silver-chainsaw-4w5jqgp7xw4fjx96-8000.app.github.dev/auth/oauth2callback"
+    flow.redirect_uri = request.build_absolute_uri(reverse('oauth2callback')) # "https://silver-chainsaw-4w5jqgp7xw4fjx96-8000.app.github.dev/auth/oauth2callback"
 
     # Use the authorization server's response to fetch the OAuth 2.0 tokens.
     authorization_response = request.build_absolute_uri()

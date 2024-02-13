@@ -7,7 +7,7 @@ from django.http import JsonResponse
 from django.shortcuts import render, redirect
 
 from api.tba import get_teams_list, get_team_events
-from teams.models import Teams, Team_Match_Data
+from teams.models import Teams, Team_Match_Data, HumanPlayerMatch
 from .forms import NewPitScoutingData
 
 cloudinary.config(
@@ -50,7 +50,10 @@ def team_page(request, team_number):
         team, created = Teams.objects.get_or_create(team_number=team_number, event=comp_code)
         all_team_match_data = Team_Match_Data.objects.filter(team_number=team_number, event=comp_code).order_by("quantifier", "-match_number")
 
-        return render(request, 'teams/team_page.html', {'team': team, 'all_team_match_data': all_team_match_data, "team_number": team_number})
+        human_player_matches = HumanPlayerMatch.objects.filter(team_number=team_number, event=comp_code)
+        print(human_player_matches)
+
+        return render(request, 'teams/team_page.html', {'team': team, 'all_team_match_data': all_team_match_data, "team_number": team_number, "human_player_matches": human_player_matches})
 
     return render(request, 'teams/team_page.html', {"team_number": team_number})
 
@@ -81,3 +84,20 @@ def pit_scouting(request, team_number):
     else:
         form = NewPitScoutingData()
     return render(request, "teams/pit_scouting.html", {'form': form, 'team_number': team_number})
+
+def human_player_submit(request):
+    if request.method == "POST":
+        team_num = request.POST["team_num"]
+        match_num = request.POST["match_num"]
+        timing = request.POST["timing"]
+        notes = request.POST["notes"]
+        name = request.session["name"]
+        event = request.GET["comp"]
+
+        print(team_num, event)
+
+        HumanPlayerMatch(team_number=team_num, event=event, match_number=match_num, human_player_timing=timing, human_player_spotlit=notes, strategist_name=name).save()
+
+        return redirect("/strategy/")
+    else:
+        return render(request, "teams/human_player_scout.html")

@@ -38,10 +38,6 @@
             <th>Defense</th>
             <th>Comments</th>
             <th>Scout Name</th>
-
-            <th>Timing</th>
-            <th>Spotlit</th>
-            <th>Strategist Name</th>
         </tr>
         </thead>
         <tbody>
@@ -59,26 +55,27 @@
                 <td>{{ match.defense_ranking }}</td>
                 <td>{{ match.comment }}</td>
                 <td>{{ match.scout_name }}</td>
-                <td>{% if match.human_player_timing == -1 %}
-                        N/A
-                    {% else %}
-                        {{ match.human_player_timing }}
-                    {% endif %}
-                </td>
-                <td>{% if match.human_player_spotlit == -1 %}
-                        N/A
-                    {% else %}
-                        {{ match.human_player_spotlit }}
-                    {% endif %}
-                </td>
-                <td>{% if match.strategist_name == "" %}
-                        N/A
-                    {% else %}
-                        {{ match.strategist_name }}
-                    {% endif %}
-                </td>
             </tr>
         {% endfor %}
         </tbody>
+    </table>
+
+    <table class="table table-responsive">
+        <thead>
+            <tr>
+                <th>Match</th>
+                <th>Timing</th>
+                <th>Spotlit</th>
+                <th>Strategist Name</th>
+            </tr>
+            {% for match in human_player_matches %}
+            <tr>
+                <td style="white-space: nowrap">{{ match.match_number }}</td>
+                <td>{{ match.human_player_timing }}</td>
+                <td>{{ match.human_player_spotlit }}</td>
+                <td>{{ match.strategist_name }}</td>
+            </tr>
+        {% endfor %}
+        </thead>
     </table>
 {% endblock %}

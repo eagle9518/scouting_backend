@@ -1,0 +1,40 @@
+{% extends 'index.html' %}
+
+
+{% block Title %} Human Player Scout {% endblock %}
+
+{% block Styles %}
+    <style>
+        .asteriskField {
+            display: none;
+        }
+    </style>
+{% endblock %}
+
+{% block Content %}
+    <h2>Human Player Scouting</h2>
+    <form method="post">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label for="team_num" class="form-label">Team Number</label>
+            <input type="number" class="form-control" id="team_num" name="team_num">
+        </div>
+        <div class="mb-3">
+            <label for="match_num" class="form-label">Match Number</label>
+            <input type="number" class="form-control" id="match_num" name="match_num">
+        </div>
+        <div class="mb-3">
+            <label for="timing" class="form-label">Timing Rating (1-5)</label>
+            <input type="number" class="form-control" id="timing" name="timing" min="1" max="5">
+        </div>
+        <div class="mb-3">
+            <label for="notes" class="form-label">Notes (0-3)</label>
+            <input type="number" class="form-control" id="notes" name="notes" min="0" max="3">
+        </div>
+        <div class="mb-3">
+            <label for="name" class="form-label">Your Name</label>
+            <input type="text" class="form-control" id="name" name="name" value="{{ request.session.name }}" disabled>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+{% endblock %}

@@ -37,6 +37,11 @@ class Team_Match_Data(models.Model):
     comment = models.CharField(max_length=256)
     scout_name = models.CharField(max_length=32)
 
+class HumanPlayerMatch(models.Model):
+    team_number = models.IntegerField()
+    event = models.CharField(max_length=16, default="testing")
+    match_number = models.IntegerField()
+    
     human_player_timing = models.IntegerField(default=-1)
     human_player_spotlit = models.IntegerField(default=-1)
     strategist_name = models.CharField(max_length=32, default="")

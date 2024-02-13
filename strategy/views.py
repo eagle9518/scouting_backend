@@ -10,7 +10,6 @@ from teams import models
 from helpers import login_required
 
 
-@login_required
 def rankings(request):
     comp_code = request.GET.get('comp')
     teams = models.Teams.objects.filter(event=comp_code).order_by("team_number")
