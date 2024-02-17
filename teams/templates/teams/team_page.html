@@ -59,16 +59,16 @@
         {% endfor %}
         </tbody>
     </table>
-
+    <a href="{% url "human-scout" team_number%}">Scout Human Player Now</a>
     <table class="table table-responsive">
         <thead>
-            <tr>
-                <th>Match</th>
-                <th>Timing</th>
-                <th>Spotlit</th>
-                <th>Strategist Name</th>
-            </tr>
-            {% for match in human_player_matches %}
+        <tr>
+            <th>Match</th>
+            <th>Timing</th>
+            <th>Spotlit</th>
+            <th>Strategist Name</th>
+        </tr>
+        {% for match in human_player_matches %}
             <tr>
                 <td style="white-space: nowrap">{{ match.match_number }}</td>
                 <td>{{ match.human_player_timing }}</td>
