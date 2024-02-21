@@ -7,6 +7,7 @@ from django.http import JsonResponse
 from django.shortcuts import render, redirect
 
 from api.tba import get_teams_list, get_team_events
+from helpers import login_required
 from teams.models import Teams, Team_Match_Data, Human_Player_Match
 from .forms import NewPitScoutingData, NewHumanScoutingData
 
@@ -25,6 +26,7 @@ def get_events(request):
     return JsonResponse(get_team_events())
 
 
+@login_required
 def display_teams(request):
     comp_code = request.GET.get('comp', "testing")
     pit_scouted = []
@@ -43,6 +45,7 @@ def display_teams(request):
     return render(request, 'teams/view_teams.html', {'all_teams': all_teams, "pit_scouted": pit_scouted})
 
 
+@login_required
 def team_page(request, team_number):
     comp_code = request.GET.get('comp')
     if comp_code is not None:
@@ -57,6 +60,7 @@ def team_page(request, team_number):
     return render(request, 'teams/team_page.html', {"team_number": team_number})
 
 
+@login_required
 def pit_scouting(request, team_number):
     comp_code = request.GET.get('comp')
     if request.method == 'POST' and comp_code is not None:
@@ -85,6 +89,7 @@ def pit_scouting(request, team_number):
     return render(request, "teams/pit_scouting.html", {'form': form, 'team_number': team_number})
 
 
+@login_required
 def human_player_submit(request, team_number):
     comp_code = request.GET.get('comp')
     if request.method == 'POST':

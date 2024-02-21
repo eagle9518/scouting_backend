@@ -10,6 +10,7 @@ from teams import models
 from helpers import login_required
 
 
+@login_required
 def rankings(request):
     comp_code = request.GET.get('comp')
     teams = models.Teams.objects.filter(event=comp_code).order_by("team_number")
@@ -20,6 +21,7 @@ def rankings(request):
     return render(request, "strategy/rankings.html", {'team_averages': team_averages})
 
 
+@login_required
 def dashboard(request):
     if request.headers.get('x-requested-with') == 'XMLHttpRequest':
         match_number = json.load(request)
@@ -39,10 +41,6 @@ def dashboard(request):
         return JsonResponse(response)
 
     return render(request, "strategy/dashboard.html")
-
-
-def picklist(request):
-    return render(request, "strategy/picklist.html")
 
 
 def fetch_team_match_averages(team_number):

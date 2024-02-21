@@ -32,6 +32,7 @@ client_config = {
     }
 }
 
+
 def authorize(request):
     flow = google_auth_oauthlib.flow.Flow.from_client_config(
         client_config=client_config, scopes=SCOPES)
@@ -53,6 +54,7 @@ def authorize(request):
     # session['state'] = state
 
     return redirect(authorization_url)
+
 
 def oauth2callback(request):
     flow = google_auth_oauthlib.flow.Flow.from_client_config(
@@ -82,6 +84,7 @@ def oauth2callback(request):
     request.session["email"] = r["email"]
 
     return redirect('/')
+
 
 def credentials_to_dict(credentials):
     return {'token': credentials.token,

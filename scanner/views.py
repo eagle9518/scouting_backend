@@ -4,9 +4,11 @@ import numpy as np
 from django.http import JsonResponse
 from django.shortcuts import render
 
+from helpers import login_required
 from teams.models import Teams, Team_Match_Data
 
 
+@login_required
 def scanner(request):
     # Receive fetch from scanner.js
     if request.headers.get('x-requested-with') == 'XMLHttpRequest':
@@ -17,7 +19,7 @@ def scanner(request):
         Team_Match_Data.objects.get_or_create(team_number=int(data_from_post["teamNumber"]),
                                               event=data_from_post["comp_code"],
                                               match_number=data_from_post["matchNumber"],
-                                              quantifier='Quals',
+                                              quantifier=data_from_post["quantifier"],
 
                                               auto_leave=data_from_post["autoLeave"],
                                               auto_amp=data_from_post["autoAmp"],
@@ -39,24 +41,4 @@ def scanner(request):
         response = {"confirmation": "Successfully Sent"}
         return JsonResponse(response)
 
-    return render(request, 'qr_scanner.html')
-
-# def points_calculator(json_data, auto_grid_list, teleop_grid_list):
-#     # Specified point values from Game Manuel
-#     AUTO_CHARGING_STATION_POINTS = np.array([0, 3, 8, 12])
-#     END_CHARGING_STATION_POINTS = np.array([0, 2, 6, 10])
-#     AUTO_GRID_POINTS = np.array([[6], [4], [3]])
-#     TELEOP_GRID_POINTS = np.array([[5], [3], [2]])
-#
-#     # Returns number of non-zero values on each row in a 3x1 matrix
-#     auto_grid_counts = np.count_nonzero(auto_grid_list, axis=1, keepdims=True)
-#     teleop_grid_counts = np.count_nonzero(teleop_grid_list, axis=1, keepdims=True)
-#
-#     # Vector multiplication between counts and points
-#     auto_grid_points = np.sum(auto_grid_counts * AUTO_GRID_POINTS)
-#     teleop_grid_points = np.sum(teleop_grid_counts * TELEOP_GRID_POINTS)
-#
-#     auto_charging_station_points = AUTO_CHARGING_STATION_POINTS[int(json_data["autoChargingStation"])]
-#     end_charging_station_points = END_CHARGING_STATION_POINTS[int(json_data["endChargingStation"])]
-#
-#     return auto_grid_points + teleop_grid_points + auto_charging_station_points + end_charging_station_points
+    return render(request, 'scanner/qr_scanner.html')
