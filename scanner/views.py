@@ -19,7 +19,7 @@ def scanner(request):
         Team_Match_Data.objects.get_or_create(team_number=int(data_from_post["teamNumber"]),
                                               event=data_from_post["comp_code"],
                                               match_number=data_from_post["matchNumber"],
-                                              quantifier=data_from_post["quantifier"],
+                                              quantifier="Quals",
 
                                               auto_leave=data_from_post["autoLeave"],
                                               auto_amp=data_from_post["autoAmp"],
@@ -41,4 +41,4 @@ def scanner(request):
         response = {"confirmation": "Successfully Sent"}
         return JsonResponse(response)
 
-    return render(request, 'scanner/qr_scanner.html')
+    return render(request, 'qr_scanner.html')

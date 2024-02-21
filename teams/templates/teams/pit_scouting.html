@@ -9,11 +9,17 @@
         .asteriskField {
             display: none;
         }
+        .requiredField {
+            font-weight: bold;
+        }
+
     </style>
 {% endblock %}
 
 {% block Content %}
     <h2>Pit Scouting</h2>
     <h3>Team {{ team_number }}</h3>
-    {% crispy form %}
+    <div class="pit_scout">
+        {% crispy form %}
+    </div>
 {% endblock %}

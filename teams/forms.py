@@ -7,23 +7,29 @@ from teams.models import Human_Player_Match
 
 DRIVETRAINS = (
     ("Swerve", "Swerve"),
-    ("WestCoast", "WestCoast"),
-    ("Logan", "Wong"),
-    ("Boyuan", "Liu"))
+    ("WestCoast", "WestCoast"))
 
+INTAKE_LOCATION = (
+    ("Source", "Source"),
+    ("Ground", "Ground"))
 
-# Intake from source or ground
-# Yes/No (Can you score mind-match in the trap)
-# Where can they score (multiple select (Trap, Speaker, Amp))
-# Where can you score best
-# How far can you shoot
+SCORING_LOCATION = (
+    ("Speaker", "Speaker"),
+    ("Amp", "Amp"),
+    ("Trap", "Trap"),
+    ("None of the above :(", "None of the above :("))
 
 
 class NewPitScoutingData(forms.Form):
-    drivetrain = forms.ChoiceField(choices=DRIVETRAINS)
+    drivetrain = forms.ChoiceField(choices=DRIVETRAINS,
+                                   widget=forms.RadioSelect)
     weight = forms.IntegerField()
     length = forms.IntegerField()
     width = forms.IntegerField()
+    intake_location = forms.ChoiceField(choices=INTAKE_LOCATION,
+                                        widget=forms.RadioSelect)
+    scoring_locations = forms.MultipleChoiceField(choices=SCORING_LOCATION,
+                                                  widget=forms.CheckboxSelectMultiple)
     robot_picture = forms.ImageField()
     additional_info = forms.CharField(max_length=512)
 
@@ -36,6 +42,8 @@ class NewPitScoutingData(forms.Form):
             'weight',
             'length',
             'width',
+            'intake_location',
+            'scoring_locations',
             'robot_picture',
             'additional_info',
             Submit('submit', 'Submit'))

@@ -3,6 +3,18 @@
 
 {% block Title %} Team {{ team_number }}{% endblock %}
 
+{% block Styles %}
+    <style>
+        .batman {
+            background-color: #d7d9f2;
+        }
+
+        .flash {
+            background-color: #ffe8d4;
+        }
+    </style>
+{% endblock %}
+
 {% block Content %}
     <h2>Team {{ team_number }}</h2>
     {% if team.pit_scout_status == True %}
@@ -24,9 +36,14 @@
     {% endif %}
 
     <table class="table table-responsive">
+        <colgroup>
+            <col/>
+            <col span="2" class="batman"/>
+            <col span="2" class="flash"/>
+        </colgroup>
         <thead>
         <tr>
-            <th>Match</th>
+            <th scope="col">Match</th>
             <th>Leave</th>
             <th>Amp</th>
             <th>Speaker</th>
@@ -46,9 +63,21 @@
                 <td style="white-space: nowrap">{{ match.quantifier }} {{ match.match_number }}</td>
                 <td>{{ match.auto_leave }}</td>
                 <td>{{ match.auto_amp }}</td>
-                <td>{{ match.auto_speaker_make }}</td>
+
+                {% with match.auto_speaker_make as auto_make %}
+                    {% with match.auto_speaker_miss as auto_miss %}
+                        <td>{{ auto_make }}/{{ auto_make|add:auto_miss }}</td>
+                    {% endwith %}
+                {% endwith %}
+
                 <td>{{ match.teleop_amp }}</td>
-                <td>{{ match.teleop_speaker_make }}</td>
+
+                {% with match.teleop_speaker_make as teleop_make %}
+                    {% with match.teleop_speaker_make as teleop_miss %}
+                        <td>{{ teleop_make }}/{{ teleop_make|add:teleop_miss }}</td>
+                    {% endwith %}
+                {% endwith %}
+
                 <td>{{ match.trap }}</td>
                 <td>{{ match.climb }}</td>
                 <td>{{ match.driver_ranking }}</td>
