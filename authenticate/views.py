@@ -74,8 +74,6 @@ def oauth2callback(request):
 
     r = requests.get(f'https://www.googleapis.com/oauth2/v2/userinfo?access_token={cred["token"]}').json()
 
-    print(r)
-
     request.session["name"] = r["given_name"] + " " + r["family_name"]
 
     if r["email"] not in AUTHORIZED_EMAIL: #and r["email"] not in PIT_SCOUT_EMAIL:

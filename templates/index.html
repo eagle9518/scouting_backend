@@ -15,7 +15,7 @@
     <header>
         <nav class="navbar navbar-expand-lg bg-light">
             <div class="container-fluid">
-                <a class="navbar-brand" href="/">EagleScout</a>
+                <a class="navbar-brand" href="/"><h3>EagleScout</h3></a>
                 <button aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler"
                         data-bs-target="#navbarSupportedContent" data-bs-toggle="collapse" type="button">
                     <span class="navbar-toggler-icon"></span>
@@ -46,10 +46,6 @@
                                 Login with Google
                             </button>
                         </form>
-                        {% else %}
-                        <li class="nav-item">
-                            Hello, {{ request.session.name }}
-                        </li>
                         {% endif %}
                     </ul>
                 </div>

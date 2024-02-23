@@ -11,13 +11,14 @@ DRIVETRAINS = (
 
 INTAKE_LOCATION = (
     ("Source", "Source"),
-    ("Ground", "Ground"))
+    ("Ground", "Ground"),
+    ("None :(", "None :("))
 
 SCORING_LOCATION = (
     ("Speaker", "Speaker"),
     ("Amp", "Amp"),
     ("Trap", "Trap"),
-    ("None of the above :(", "None of the above :("))
+    ("None :(", "None :("))
 
 
 class NewPitScoutingData(forms.Form):
@@ -26,8 +27,8 @@ class NewPitScoutingData(forms.Form):
     weight = forms.IntegerField()
     length = forms.IntegerField()
     width = forms.IntegerField()
-    intake_location = forms.ChoiceField(choices=INTAKE_LOCATION,
-                                        widget=forms.RadioSelect)
+    intake_locations = forms.MultipleChoiceField(choices=INTAKE_LOCATION,
+                                                 widget=forms.CheckboxSelectMultiple)
     scoring_locations = forms.MultipleChoiceField(choices=SCORING_LOCATION,
                                                   widget=forms.CheckboxSelectMultiple)
     robot_picture = forms.ImageField()
@@ -42,7 +43,7 @@ class NewPitScoutingData(forms.Form):
             'weight',
             'length',
             'width',
-            'intake_location',
+            'intake_locations',
             'scoring_locations',
             'robot_picture',
             'additional_info',

@@ -10,6 +10,8 @@ class Teams(models.Model):
     weight = models.IntegerField(blank=True, null=True)
     length = models.IntegerField(blank=True, null=True)
     width = models.IntegerField(blank=True, null=True)
+    intake_locations = models.CharField(max_length=50)
+    scoring_locations = models.CharField(max_length=50)
     additional_info = models.CharField(max_length=256, blank=True, null=True)
     pit_scout_status = models.BooleanField(default=False)
 

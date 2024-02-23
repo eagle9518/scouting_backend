@@ -19,6 +19,7 @@
         {% for team_number, team_stats in team_averages.items %}
             <tr class="data">
                 <td class="rank">{{ forloop.counter }}</td>
+                <td><a href="{% url "team_page" team_number %}">{{ team_number }}</a></td>
                 {% for stat_type, stat in team_stats.items %}
                     <td class="{{ stat_type }}">{{ stat }}</td>
                 {% endfor %}

@@ -52,8 +52,7 @@ def fetch_team_match_averages(team_number):
                                                     Avg('trap', default=0),
                                                     Avg('climb', default=0))
 
-    return {'team_number': team_number,
-            'auto': team_match_averages['auto_amp__avg'] + team_match_averages['auto_speaker_make__avg'],
-            'teleop': team_match_averages['teleop_amp__avg'] + team_match_averages['teleop_speaker_make__avg'],
-            'trap': team_match_averages['trap__avg'],
-            'climb': team_match_averages['climb__avg']}
+    return {'auto': round(team_match_averages['auto_amp__avg'] + team_match_averages['auto_speaker_make__avg'], 3),
+            'teleop': round(team_match_averages['teleop_amp__avg'] + team_match_averages['teleop_speaker_make__avg'], 3),
+            'trap': round(team_match_averages['trap__avg'], 3),
+            'climb': round(team_match_averages['climb__avg'], 3)}

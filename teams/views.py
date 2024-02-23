@@ -51,9 +51,7 @@ def team_page(request, team_number):
     if comp_code is not None:
         team, created = Teams.objects.get_or_create(team_number=team_number, event=comp_code)
         all_team_match_data = Team_Match_Data.objects.filter(team_number=team_number, event=comp_code).order_by("quantifier", "-match_number")
-
         human_player_matches = Human_Player_Match.objects.filter(team_number=team_number, event=comp_code)
-        print(human_player_matches)
 
         return render(request, 'teams/team_page.html', {'team': team, 'all_team_match_data': all_team_match_data, "team_number": team_number, "human_player_matches": human_player_matches})
 
@@ -74,11 +72,15 @@ def pit_scouting(request, team_number):
 
             Teams.objects.get_or_create(team_number=team_number, event=comp_code)
 
+            intake_locations_char = ", ".join(form.cleaned_data.get('intake_locations'))
+            scoring_locations_char = ", ".join(form.cleaned_data.get('scoring_locations'))
             Teams.objects.filter(team_number=team_number, event=comp_code).update(
                 drivetrain=form.cleaned_data.get('drivetrain'),
                 weight=form.cleaned_data.get('weight'),
                 length=form.cleaned_data.get('length'),
                 width=form.cleaned_data.get('width'),
+                intake_locations=intake_locations_char,
+                scoring_locations=scoring_locations_char,
                 robot_picture=img_url,
                 additional_info=form.cleaned_data.get('additional_info'),
                 pit_scout_status=True)

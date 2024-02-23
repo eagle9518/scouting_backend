@@ -40,15 +40,16 @@
     <h2>Team {{ team_number }}</h2>
     {% if team.pit_scout_status == True %}
         <div class="row">
-            <div class="col-9">
+            <div class="col-8">
                 <span><b>Drivetrain: </b>{{ team.drivetrain }}</span> <br>
                 <span><b>Length x Width: </b>{{ team.length }} x {{ team.width }}</span> <br>
-                <span><b>Weight: </b>{{ team.weight }}</span> <br>
+                <span><b>Weight: </b>{{ team.weight }}</span> <br> <br>
+                <span><b>Intake Locations: </b>{{ team.intake_locations }}</span> <br>
+                <span><b>Scoring Location: </b>{{ team.scoring_locations }}</span> <br> <br>
                 <span><b>Additional Info: </b> {{ team.additional_info }}</span> <br>
                 <a href="{% url "pit_scouting" team.team_number %}">Update Info</a>
-
             </div>
-            <div class="col-3">
+            <div class="col-4">
                 <img src="{{ team.robot_picture }}" alt="Robot Picture" class="img-thumbnail">
             </div>
         </div>

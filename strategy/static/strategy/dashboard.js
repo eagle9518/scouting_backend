@@ -1,4 +1,4 @@
-const scoringFields = ["team_number", "auto", "teleop", "trap", "climb"];
+const scoringFields = ["auto", "teleop", "trap", "climb"];
 
 document.getElementById("match_button").onclick = () => {
     let match = document.getElementById("match").value
@@ -24,7 +24,10 @@ document.getElementById("match_button").onclick = () => {
                 let redTeamRow = dashboardTable.insertRow();
 
                 let redTeamScoringField = redTeamRow.insertCell();
-                redTeamScoringField.appendChild(document.createTextNode("Red ".concat((alliance_number+1).toString())));
+                redTeamScoringField.appendChild(document.createTextNode("Red ".concat((alliance_number + 1).toString())));
+
+                let redTeamNumber = redTeamRow.insertCell();
+                redTeamNumber.appendChild(document.createTextNode(data["red"][redTeam]["team_number"]));
 
                 for (let scoringField of scoringFields) {
                     let redTeamScoringField = redTeamRow.insertCell();
@@ -36,12 +39,15 @@ document.getElementById("match_button").onclick = () => {
                 let blueTeam = data["blue_teams"][alliance_number];
                 let blueTeamRow = dashboardTable.insertRow();
 
-                let redTeamScoringField = blueTeamRow.insertCell();
-                redTeamScoringField.appendChild(document.createTextNode("Blue ".concat((alliance_number+1).toString())));
+                let blueTeamScoringField = blueTeamRow.insertCell();
+                blueTeamScoringField.appendChild(document.createTextNode("Blue ".concat((alliance_number + 1).toString())));
+
+                let blueTeamNumber = blueTeamRow.insertCell();
+                blueTeamNumber.appendChild(document.createTextNode(data["blue"][blueTeam]["team_number"]));
 
                 for (let scoringField of scoringFields) {
-                    let redTeamScoringField = blueTeamRow.insertCell();
-                    redTeamScoringField.appendChild(document.createTextNode(data["blue"][blueTeam][scoringField]));
+                    let blueTeamScoringField = blueTeamRow.insertCell();
+                    blueTeamScoringField.appendChild(document.createTextNode(data["blue"][blueTeam][scoringField]));
                 }
             }
         })
