@@ -5,13 +5,34 @@
 
 {% block Styles %}
     <style>
-        .batman {
-            background-color: #d7d9f2;
+        td:not(#comments) {
+            white-space: nowrap;
         }
 
-        .flash {
-            background-color: #ffe8d4;
+        th {
+            white-space: nowrap;
         }
+
+        #match_data tr td:nth-child(n+2) {
+            background-color: lightcyan;
+        }
+
+        #match_data tr td:nth-child(n+5) {
+            background-color: lightpink;
+        }
+
+        #match_data tr td:nth-child(n+7) {
+            background-color: lightgoldenrodyellow;
+        }
+
+        #match_data tr td:nth-child(n+9) {
+            background-color: lavenderblush;
+        }
+
+        #match_data tr td:nth-child(12) {
+            background-color: white;
+        }
+
     </style>
 {% endblock %}
 
@@ -34,77 +55,75 @@
     {% else %}
         <a style="color:red" href="{% url "pit_scouting" team_number %}">Pit Scout Now</a>
     {% endif %}
-
-    <table class="table table-responsive">
-        <colgroup>
-            <col/>
-            <col span="2" class="batman"/>
-            <col span="2" class="flash"/>
-        </colgroup>
-        <thead>
-        <tr>
-            <th scope="col">Match</th>
-            <th>Leave</th>
-            <th>Amp</th>
-            <th>Speaker</th>
-            <th>Amp</th>
-            <th>Speaker</th>
-            <th>Trap</th>
-            <th>Climb</th>
-            <th>Driver</th>
-            <th>Defense</th>
-            <th>Comments</th>
-            <th>Scout Name</th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for match in all_team_match_data %}
+    <div class="table-responsive">
+        <table id="match_data" class="table table-bordered">
+            <thead>
             <tr>
-                <td style="white-space: nowrap">{{ match.quantifier }} {{ match.match_number }}</td>
-                <td>{{ match.auto_leave }}</td>
-                <td>{{ match.auto_amp }}</td>
-
-                {% with match.auto_speaker_make as auto_make %}
-                    {% with match.auto_speaker_miss as auto_miss %}
-                        <td>{{ auto_make }}/{{ auto_make|add:auto_miss }}</td>
-                    {% endwith %}
-                {% endwith %}
-
-                <td>{{ match.teleop_amp }}</td>
-
-                {% with match.teleop_speaker_make as teleop_make %}
-                    {% with match.teleop_speaker_make as teleop_miss %}
-                        <td>{{ teleop_make }}/{{ teleop_make|add:teleop_miss }}</td>
-                    {% endwith %}
-                {% endwith %}
-
-                <td>{{ match.trap }}</td>
-                <td>{{ match.climb }}</td>
-                <td>{{ match.driver_ranking }}</td>
-                <td>{{ match.defense_ranking }}</td>
-                <td>{{ match.comment }}</td>
-                <td>{{ match.scout_name }}</td>
+                <th>Match</th>
+                <th>Leave</th>
+                <th>Amp</th>
+                <th>Speaker</th>
+                <th>Amp</th>
+                <th>Speaker</th>
+                <th>Trap</th>
+                <th>Climb</th>
+                <th>Driver</th>
+                <th>Defense</th>
+                <th>Comments</th>
+                <th>Scout Name</th>
             </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-    <a href="{% url "human-scout" team_number%}">Scout Human Player Now</a>
-    <table class="table table-responsive">
-        <thead>
-        <tr>
-            <th>Match</th>
-            <th>Timing</th>
-            <th>Spotlit</th>
-            <th>Strategist Name</th>
-        </tr>
-        {% for match in human_player_matches %}
+            </thead>
+            <tbody>
+            {% for match in all_team_match_data %}
+                <tr>
+                    <td>{{ match.quantifier }} {{ match.match_number }}</td>
+                    <td>{{ match.auto_leave }}</td>
+                    <td>{{ match.auto_amp }}</td>
+
+                    {% with match.auto_speaker_make as auto_make %}
+                        {% with match.auto_speaker_miss as auto_miss %}
+                            <td>{{ auto_make }}/{{ auto_make|add:auto_miss }}</td>
+                        {% endwith %}
+                    {% endwith %}
+
+                    <td>{{ match.teleop_amp }}</td>
+
+                    {% with match.teleop_speaker_make as teleop_make %}
+                        {% with match.teleop_speaker_miss as teleop_miss %}
+                            <td>{{ teleop_make }}/{{ teleop_make|add:teleop_miss }}</td>
+                        {% endwith %}
+                    {% endwith %}
+
+                    <td>{{ match.trap }}</td>
+                    <td>{{ match.climb }}</td>
+                    <td>{{ match.driver_ranking }}</td>
+                    <td>{{ match.defense_ranking }}</td>
+                    <td id="comments">{{ match.comment }}</td>
+                    <td>{{ match.scout_name }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <a href="{% url "human-scout" team_number %}">Scout Human Player Now</a>
+    <div class="table-responsive">
+        <table class="table table-bordered">
+            <thead>
             <tr>
-                <td style="white-space: nowrap">{{ match.match_number }}</td>
-                <td>{{ match.human_player_timing }}</td>
-                <td>{{ match.human_player_spotlit }}</td>
-                <td>{{ match.strategist_name }}</td>
+                <th>Match</th>
+                <th>Timing</th>
+                <th>Spotlit</th>
+                <th>Strategist Name</th>
             </tr>
-        {% endfor %}
-        </thead>
-    </table>
+            {% for match in human_player_matches %}
+                <tr>
+                    <td style="white-space: nowrap">{{ match.match_number }}</td>
+                    <td>{{ match.human_player_timing }}</td>
+                    <td>{{ match.human_player_spotlit }}</td>
+                    <td>{{ match.strategist_name }}</td>
+                </tr>
+            {% endfor %}
+            </thead>
+        </table>
+    </div>
 {% endblock %}
