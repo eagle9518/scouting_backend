@@ -16,25 +16,26 @@ def rankings(request):
     teams = models.Teams.objects.filter(event=comp_code).order_by("team_number")
     team_averages = {}
     for team in teams:
-        team_averages[team.team_number] = fetch_team_match_averages(team.team_number)
+        team_averages[team.team_number] = fetch_team_match_averages(team.team_number, comp_code)
 
     return render(request, "strategy/rankings.html", {'team_averages': team_averages})
 
 
 @login_required
 def dashboard(request):
+    comp_code = request.GET.get('comp')
     if request.headers.get('x-requested-with') == 'XMLHttpRequest':
         match_number = json.load(request)
-        match = get_single_match(request.GET.get('comp'), "qm" + str(match_number))
+        match = get_single_match(comp_code, "qm" + str(match_number))
         red_json = {}
         red_teams = []
         blue_json = {}
         blue_teams = []
         for red_team in match['red']:
-            red_json[red_team] = fetch_team_match_averages(red_team)
+            red_json[red_team] = fetch_team_match_averages(red_team, comp_code)
             red_teams.append(red_team)
         for blue_team in match['blue']:
-            blue_json[blue_team] = fetch_team_match_averages(blue_team)
+            blue_json[blue_team] = fetch_team_match_averages(blue_team, comp_code)
             blue_teams.append(blue_team)
 
         response = {'red': red_json, 'blue': blue_json, 'red_teams': red_teams, 'blue_teams': blue_teams}
@@ -43,8 +44,8 @@ def dashboard(request):
     return render(request, "strategy/dashboard.html")
 
 
-def fetch_team_match_averages(team_number):
-    team_match_data = models.Team_Match_Data.objects.filter(team_number=team_number)
+def fetch_team_match_averages(team_number, comp_code):
+    team_match_data = models.Team_Match_Data.objects.filter(team_number=team_number, event=comp_code)
     team_match_averages = team_match_data.aggregate(Avg('auto_amp', default=0),
                                                     Avg('auto_speaker_make', default=0),
                                                     Avg('teleop_amp', default=0),

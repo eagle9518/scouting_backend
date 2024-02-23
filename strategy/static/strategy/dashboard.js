@@ -17,7 +17,6 @@ document.getElementById("match_button").onclick = () => {
             return response.json();
         })
         .then(data => {
-            console.log(data)
             let dashboardTable = document.getElementById("dashboardTable");
             for (let alliance_number = 0; alliance_number < data["red_teams"].length; alliance_number++) {
                 let redTeam = data["red_teams"][alliance_number];
@@ -27,7 +26,7 @@ document.getElementById("match_button").onclick = () => {
                 redTeamScoringField.appendChild(document.createTextNode("Red ".concat((alliance_number + 1).toString())));
 
                 let redTeamNumber = redTeamRow.insertCell();
-                redTeamNumber.appendChild(document.createTextNode(data["red"][redTeam]["team_number"]));
+                redTeamNumber.appendChild(document.createTextNode(redTeam));
 
                 for (let scoringField of scoringFields) {
                     let redTeamScoringField = redTeamRow.insertCell();
@@ -43,7 +42,7 @@ document.getElementById("match_button").onclick = () => {
                 blueTeamScoringField.appendChild(document.createTextNode("Blue ".concat((alliance_number + 1).toString())));
 
                 let blueTeamNumber = blueTeamRow.insertCell();
-                blueTeamNumber.appendChild(document.createTextNode(data["blue"][blueTeam]["team_number"]));
+                blueTeamNumber.appendChild(document.createTextNode(blueTeam));
 
                 for (let scoringField of scoringFields) {
                     let blueTeamScoringField = blueTeamRow.insertCell();
