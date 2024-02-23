@@ -3,17 +3,30 @@
 
 {% block Title %}Rankings{% endblock %}
 
+{% block Styles %}
+    <style>
+        td {
+            white-space: nowrap;
+        }
+
+        th {
+            white-space: nowrap;
+        }
+    </style>
+{% endblock %}
+
 {% block Content %}
-    <table class="table" id="rankings_table">
-        <thead>
-        <tr class="sticky-top" style="background-color: gray">
-            <th>Rank</th>
-            <th onclick="sortTable(1, 'team_number')">Team Number</th>
-            <th onclick="sortTable(2, 'auto')">A-Notes</th>
-            <th onclick="sortTable(3, 'teleop')">T-Notes</th>
-            <th onclick="sortTable(4, 'trap')">Traps</th>
-            <th onclick="sortTable(5, 'climb')">Climb</th>
-        </tr>
+    <div class="table-responsive">
+        <table class="table" id="rankings_table">
+            <thead>
+            <tr class="sticky-top" style="background-color: gray">
+                <th>Rank</th>
+                <th onclick="sortTable(1, 'team_number')">Team Number</th>
+                <th onclick="sortTable(2, 'auto')">A-Notes</th>
+                <th onclick="sortTable(3, 'teleop')">T-Notes</th>
+                <th onclick="sortTable(4, 'trap')">Traps</th>
+                <th onclick="sortTable(5, 'climb')">Climb</th>
+            </tr>
         </thead>
         <tbody>
         {% for team_number, team_stats in team_averages.items %}
@@ -26,7 +39,8 @@
             </tr>
         {% endfor %}
         </tbody>
-    </table>
+        </table>
+    </div>
 {% endblock %}
 
 {% block Scripts %}
