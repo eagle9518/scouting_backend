@@ -5,8 +5,12 @@
 
 {% block Styles %}
     <style>
-        td:not(#comments) {
+        td:not(#comments_data) {
             white-space: nowrap;
+        }
+
+        #comments_column {
+            padding-right: 200px;
         }
 
         th {
@@ -70,7 +74,7 @@
                 <th>Climb</th>
                 <th>Driver</th>
                 <th>Defense</th>
-                <th>Comments</th>
+                <th id="comments_column">Comments</th>
                 <th>Scout Name</th>
             </tr>
             </thead>
@@ -82,24 +86,24 @@
                     <td>{{ match.auto_amp }}</td>
 
                     {% with match.auto_speaker_make as auto_make %}
-                        {% with match.auto_speaker_miss as auto_miss %}
-                            <td>{{ auto_make }}/{{ auto_make|add:auto_miss }}</td>
-                        {% endwith %}
+                    {% with match.auto_speaker_miss as auto_miss %}
+                    <td>{{ auto_make }}/{{ auto_make|add:auto_miss }}</td>
+                    {% endwith %}
                     {% endwith %}
 
                     <td>{{ match.teleop_amp }}</td>
 
                     {% with match.teleop_speaker_make as teleop_make %}
-                        {% with match.teleop_speaker_miss as teleop_miss %}
-                            <td>{{ teleop_make }}/{{ teleop_make|add:teleop_miss }}</td>
-                        {% endwith %}
+                    {% with match.teleop_speaker_miss as teleop_miss %}
+                    <td>{{ teleop_make }}/{{ teleop_make|add:teleop_miss }}</td>
+                    {% endwith %}
                     {% endwith %}
 
                     <td>{{ match.trap }}</td>
                     <td>{{ match.climb }}</td>
                     <td>{{ match.driver_ranking }}</td>
                     <td>{{ match.defense_ranking }}</td>
-                    <td id="comments">{{ match.comment }}</td>
+                    <td>{{ match.comment }}</td>
                     <td>{{ match.scout_name }}</td>
                 </tr>
             {% endfor %}
